@@ -71,7 +71,7 @@ const Sidebar = ({ collapsed, onToggle, currentPage, onPageChange }) => {
                     }
                     `}
                       >
-                        <span className="font-medium ml-2 dark:text-white">
+                        <span className="font-medium ml-2 dark:text-white text-sm">
                           {item.label}
                         </span>
                         {item.badge && (
