@@ -90,7 +90,7 @@ export const menuItems = [
 export const stats = [
   {
     title: "Total Revenue",
-    value: "€124,563",
+    value: "$124,563",
     change: "+12%",
     trend: "up",
     icon: DollarSign,
@@ -128,4 +128,19 @@ export const stats = [
     bgColor: "bg-orange-50 dark:bg-orange-900/20",
     textColor: "text-orange-600 dark:text-orange-400",
   },
+];
+
+export const data = [
+  { month: "Jan", revenue: 45000, expenses: 32000 },
+  { month: "Feb", revenue: 54000, expenses: 31368 },
+  { month: "Mar", revenue: 32112, expenses: 71046 },
+  { month: "Apr", revenue: 74233, expenses: 77389 },
+  { month: "May", revenue: 59203, expenses: 85800 },
+  { month: "Jun", revenue: 94388, expenses: 17368 },
+  { month: "Jul", revenue: 11323, expenses: 93971 },
+  { month: "Aug", revenue: 54323, expenses: 81988 },
+  { month: "Sep", revenue: 34004, expenses: 46739 },
+  { month: "Oct", revenue: 58392, expenses: 13290 },
+  { month: "Nov", revenue: 69330, expenses: 18259 },
+  { month: "Dec", revenue: 21842, expenses: 42907 },
 ];

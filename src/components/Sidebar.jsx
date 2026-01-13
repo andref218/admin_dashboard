@@ -15,8 +15,8 @@ const Sidebar = ({ collapsed, onToggle, currentPage, onPageChange }) => {
       <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50 flex items-center">
         {/* Fixed Logo */}
         <div
-          className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl
-      flex items-center justify-center shadow-lg flex-shrink-0"
+          className="w-10 h-10 bg-linear-to-r from-blue-600 to-purple-600 rounded-xl
+      flex items-center justify-center shadow-lg shrink-0"
         >
           <Zap className="w-6 h-6 text-white" />
         </div>
@@ -50,8 +50,8 @@ const Sidebar = ({ collapsed, onToggle, currentPage, onPageChange }) => {
                   // active items get gradient; collapsed items center the icon; expanded items align left
                   currentPage === item.id
                     ? collapsed
-                      ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15 w-10 justify-center"
-                      : "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15 justify-start"
+                      ? "bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15 w-10 justify-center"
+                      : "bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15 justify-start"
                     : collapsed
                     ? "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 w-10 justify-center"
                     : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 justify-start"
