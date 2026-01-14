@@ -151,3 +151,51 @@ export const salesDataChart = [
   { name: "Books", value: 15, color: "#10b981" },
   { name: "Other", value: 10, color: "#f59e0b" },
 ];
+
+export const orders = [
+  {
+    id: 3487,
+    customer: "John Smith",
+    product: "Macbook Pro 16",
+    amount: "2399",
+    status: "completed",
+    date: "2024-01-15",
+  },
+  {
+    id: 3488,
+    customer: "Sara Adams",
+    product: "Iphone 14",
+    amount: "900",
+    status: "pending",
+    date: "2024-01-15",
+  },
+  {
+    id: 3489,
+    customer: "Mike Silver",
+    product: "Sony Cable",
+    amount: "15",
+    status: "cancelled",
+    date: "2024-01-15",
+  },
+  {
+    id: 3490,
+    customer: "Melanie Louis",
+    product: "Gaming Chair",
+    amount: "150",
+    status: "cancelled",
+    date: "2024-01-14",
+  },
+];
+
+export const getStatusColor = (status) => {
+  switch (status) {
+    case "completed":
+      return "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400";
+    case "pending":
+      return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-emerald-400";
+    case "cancelled":
+      return "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400";
+    default:
+      "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400";
+  }
+};
