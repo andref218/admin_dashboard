@@ -8,10 +8,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { data } from "../../constants";
+import { revenueDataChart } from "../../constants";
 
 const RevenueChart = () => {
-  const bestMonth = data.reduce((prev, current) =>
+  const bestMonth = revenueDataChart.reduce((prev, current) =>
     current.revenue > prev.revenue ? current : prev
   );
 
@@ -47,7 +47,7 @@ const RevenueChart = () => {
       <div className=" h-80">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={data}
+            data={revenueDataChart}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid
@@ -103,7 +103,7 @@ const RevenueChart = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      {data.length > 0 && (
+      {revenueDataChart.length > 0 && (
         <p className="text-sm text-slate-500 dark:text-slate-200 mt-4">
           Best month for revenue:
           <span className=" ml-1 font-semibold">

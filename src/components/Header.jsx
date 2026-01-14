@@ -102,7 +102,7 @@ const Header = ({ sideBarCollapsed, onToggleSideBar }) => {
             <img
               src="./images/profile_pic_cartoon.png"
               alt="User"
-              className="w-8 h-8 rounded-full ring-2 ring-blue-500/80 hover:ring-blue-500/80 cursor-pointer duration-300"
+              className="w-8 h-8 rounded-full   hover:ring-blue-500/80 cursor-pointer duration-300"
             />
             <div className="hidden md:block">
               <p className="text-sm font-medium text-slate-800 dark:text-slate-200">

@@ -130,7 +130,7 @@ export const stats = [
   },
 ];
 
-export const data = [
+export const revenueDataChart = [
   { month: "Jan", revenue: 45000, expenses: 32000 },
   { month: "Feb", revenue: 54000, expenses: 31368 },
   { month: "Mar", revenue: 32112, expenses: 71046 },
@@ -143,4 +143,11 @@ export const data = [
   { month: "Oct", revenue: 58392, expenses: 13290 },
   { month: "Nov", revenue: 69330, expenses: 18259 },
   { month: "Dec", revenue: 21842, expenses: 42907 },
+];
+
+export const salesDataChart = [
+  { name: "Eletronics", value: 45, color: "#3b82f6" },
+  { name: "Clothing", value: 30, color: "#8b5cf6" },
+  { name: "Books", value: 15, color: "#10b981" },
+  { name: "Other", value: 10, color: "#f59e0b" },
 ];
