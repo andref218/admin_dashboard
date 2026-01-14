@@ -1,5 +1,5 @@
 import React from "react";
-import { topProducts } from "../../constants";
+import { topProducts } from "../../../constants";
 import { TrendingDown, TrendingUp } from "lucide-react";
 
 const ProductsTable = () => {

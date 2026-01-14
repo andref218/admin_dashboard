@@ -1,5 +1,5 @@
 import React from "react";
-import { getStatusColor, orders } from "../../constants";
+import { getStatusColor, orders } from "../../../constants";
 import { MoreHorizontal } from "lucide-react";
 
 const OrdersTable = () => {
@@ -73,7 +73,7 @@ const OrdersTable = () => {
                   </td>
                   <td className="p-4">
                     <span className="text-sm font-medium text-slate-800 dark:text-white">
-                      {order.amount}
+                      ${order.amount}
                     </span>
                   </td>
                   <td className="p-4">

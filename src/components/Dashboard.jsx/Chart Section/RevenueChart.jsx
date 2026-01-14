@@ -8,7 +8,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { revenueDataChart } from "../../constants";
+import { revenueDataChart } from "../../../constants";
 
 const RevenueChart = () => {
   const bestMonth = revenueDataChart.reduce((prev, current) =>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import { salesDataChart } from "../../constants";
+import { salesDataChart } from "../../../constants";
 
 const SalesChart = () => {
   return (

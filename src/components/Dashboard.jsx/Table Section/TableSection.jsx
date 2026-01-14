@@ -1,6 +1,6 @@
 import { MoreHorizontal, TrendingDown, TrendingUp } from "lucide-react";
 import React from "react";
-import { getStatusColor, topProducts } from "../../constants";
+import { getStatusColor, topProducts } from "../../../constants";
 import OrdersTable from "./OrdersTable";
 import ProductsTable from "./ProductsTable";
 
