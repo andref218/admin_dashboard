@@ -7,10 +7,11 @@ import ProductsTable from "./ProductsTable";
 const TableSection = () => {
   return (
     <div className="space-y-6">
-      <div>
-        {/*Recent Orders Table*/}
-        <OrdersTable />
-      </div>
+      {/*Recent Orders Table*/}
+      <OrdersTable />
+
+      {/*Top Products*/}
+      <ProductsTable />
     </div>
   );
 };

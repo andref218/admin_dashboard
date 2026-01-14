@@ -199,3 +199,34 @@ export const getStatusColor = (status) => {
       "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400";
   }
 };
+
+export const topProducts = [
+  {
+    name: "Macbook Pro 16",
+    sales: 2345,
+    revenue: "$2,985,321",
+    trend: "up",
+    change: "+32%",
+  },
+  {
+    name: "Iphone 14",
+    sales: 1234,
+    revenue: "$2,445,124",
+    trend: "up",
+    change: "+18%",
+  },
+  {
+    name: "Ipad mini",
+    sales: 974,
+    revenue: "$855,243",
+    trend: "down",
+    change: "-10%",
+  },
+  {
+    name: "Gaming Chair",
+    sales: 552,
+    revenue: "$321,324",
+    trend: "up",
+    change: "+2%",
+  },
+];
