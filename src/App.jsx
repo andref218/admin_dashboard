@@ -7,14 +7,20 @@ function App() {
   const [sideBarCollapsed, setSideBarCollapsed] = useState(false);
   const [currentPage, setCurrentPage] = useState("dashboard");
 
-  const [darkMode, setDarkMode] = useState(false);
+  // Initialize darkMode state from localStorage, defaulting to false if not set
+  const [darkMode, setDarkMode] = useState(() => {
+    const storedTheme = localStorage.getItem("darkMode");
+    return storedTheme === "true" ? true : false;
+  });
 
+  // Apply or remove the 'dark' class on <html> and save preference to localStorage
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
+    localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
   const handlePageChange = (id) => {
