@@ -3,6 +3,7 @@ import {
   ChevronDown,
   Filter,
   Menu,
+  Moon,
   Plus,
   Search,
   Settings,
@@ -10,7 +11,7 @@ import {
 } from "lucide-react";
 import React from "react";
 
-const Header = ({ sideBarCollapsed, onToggleSideBar }) => {
+const Header = ({ onToggleSideBar, onToggleTheme, darkMode }) => {
   return (
     <div
       className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50
@@ -67,12 +68,17 @@ const Header = ({ sideBarCollapsed, onToggleSideBar }) => {
             <Plus className="w-4 h-4" />
             <span className="text-sm font-medium">New</span>
           </button>
-          {/*Toogle */}
+          {/*Toggle */}
           <button
+            onClick={onToggleTheme}
             className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100
           dark:hover:bg-slate-800 cursor-pointer transition-colors"
           >
-            <Sun className="w-5 h-5" />
+            {darkMode ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
           </button>
           {/*Notifications */}
           <button

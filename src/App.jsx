@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import DashBoard from "./components/Dashboard.jsx/DashBoard";
@@ -6,6 +6,16 @@ import DashBoard from "./components/Dashboard.jsx/DashBoard";
 function App() {
   const [sideBarCollapsed, setSideBarCollapsed] = useState(false);
   const [currentPage, setCurrentPage] = useState("dashboard");
+
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   const handlePageChange = (id) => {
     setCurrentPage(id);
@@ -25,8 +35,9 @@ function App() {
         />
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header
-            sideBarCollapsed={sideBarCollapsed}
             onToggleSideBar={() => setSideBarCollapsed(!sideBarCollapsed)}
+            onToggleTheme={() => setDarkMode((prev) => !prev)}
+            darkMode={darkMode}
           />
           <main className="flex-1 overflow-y-auto bg-transparent">
             <div className="p-6 space-y-6">
