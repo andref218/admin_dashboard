@@ -21,6 +21,7 @@ export const menuItems = [
     id: "dashboard",
     icon: LayoutDashboard,
     label: "Dashboard",
+    path: "/dashboard",
     active: true,
     badge: "New",
   },
@@ -28,6 +29,7 @@ export const menuItems = [
     id: "analytics",
     icon: BarChart3,
     label: "Analytics",
+    path: "/analytics",
     submenu: [
       { id: "overview", label: "Overview" },
       { id: "reports", label: "Reports" },
@@ -38,6 +40,7 @@ export const menuItems = [
     id: "users",
     icon: Users,
     label: "Users",
+    path: "/users",
     count: "1k",
     submenu: [
       { id: "all_users", label: "All Users" },
@@ -49,6 +52,7 @@ export const menuItems = [
     id: "ecommerce",
     icon: ShoppingBag,
     label: "E-commerce",
+    path: "/e-commerce",
     submenu: [
       { id: "products", label: "Products" },
       { id: "orders", label: "Orders" },
@@ -59,33 +63,39 @@ export const menuItems = [
     id: "inventory",
     icon: Package,
     label: "Inventory",
+    path: "/inventory",
     count: 800,
   },
   {
     id: "transactions",
     icon: CreditCard,
     label: "Transactions",
+    path: "/transactions",
   },
   {
     id: "messages",
     icon: MessageSquare,
     label: "Messages",
+    path: "/messages",
     badge: 12,
   },
   {
     id: "calendar",
     icon: Calendar,
     label: "Calendar",
+    path: "/calendar",
   },
   {
     id: "reports",
     icon: FileText,
     label: "Reports",
+    path: "/reports",
   },
   {
     id: "settings",
     icon: Settings,
     label: "Settings",
+    path: "/settings",
   },
 ];
 

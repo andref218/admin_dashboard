@@ -9,9 +9,14 @@ import {
   Settings,
   Sun,
 } from "lucide-react";
-import React from "react";
+import { useLocation } from "react-router-dom";
+import { pageTitles } from "../constants/pageTitles";
 
 const Header = ({ onToggleSideBar, onToggleTheme, darkMode }) => {
+  const location = useLocation();
+
+  const title = pageTitles[location.pathname] || "";
+
   return (
     <div
       className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50
@@ -29,7 +34,7 @@ const Header = ({ onToggleSideBar, onToggleTheme, darkMode }) => {
           </button>
           <div className="hidden md:block">
             <h1 className="text-2xl font-black text-slate-800 dark:text-white">
-              Dashboard
+              {title}
             </h1>
             <p className="dark:text-white text-sm">Welcome back, André!</p>
           </div>

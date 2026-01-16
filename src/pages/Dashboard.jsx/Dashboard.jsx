@@ -6,7 +6,7 @@ import ActivityFeed from "./ActivityFeed";
 
 const DashBoard = () => {
   return (
-    <div className="space-y-6">
+    <div id="dashboard" className="space-y-6">
       {/*Stats Grid */}
       <StatsGrid />
       {/*Chart Section */}

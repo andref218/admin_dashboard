@@ -1,8 +1,9 @@
 import { ChevronDown, Zap } from "lucide-react";
 import React, { useState } from "react";
 import { menuItems } from "../constants";
+import { NavLink } from "react-router-dom";
 
-const Sidebar = ({ collapsed, onToggle, currentPage, onPageChange }) => {
+const Sidebar = ({ collapsed }) => {
   return (
     <div
       className={`${
@@ -39,64 +40,59 @@ const Sidebar = ({ collapsed, onToggle, currentPage, onPageChange }) => {
 
       {/*Navigation Bar*/}
       <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-        {menuItems.map((item, itemIndex) => {
+        {menuItems.map((item, itemIndexw) => {
           return (
             <div key={item.id}>
-              <button
-                onClick={() => onPageChange(item.id)}
-                className={`w-full flex items-center p-3 rounded-xl transition-all duration-300 ease-in-out cursor-pointer
-                ${
-                  // Sets button styles based on active state and collapsed sidebar:
-                  // active items get gradient; collapsed items center the icon; expanded items align left
-                  currentPage === item.id
-                    ? collapsed
-                      ? "bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15 w-10 justify-center"
-                      : "bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15 justify-start"
-                    : collapsed
-                    ? "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 w-10 justify-center"
-                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 justify-start"
+              <NavLink
+                key={item.id}
+                to={item.path} // cada item precisa de um path no menuItems
+                className={({ isActive }) =>
+                  `w-full flex items-center p-3 rounded-xl transition-all duration-300 ease-in-out cursor-pointer ${
+                    // Sets button styles based on active state and collapsed sidebar:
+                    // active items get gradient; collapsed items center the icon; expanded items align left
+                    isActive
+                      ? collapsed
+                        ? "bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15 w-10 justify-center"
+                        : "bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15 justify-start"
+                      : collapsed
+                        ? "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 w-10 justify-center"
+                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 justify-start"
+                  }`
                 }
-              `}
               >
                 <div className="flex items-center space-x-3">
                   <item.icon className="w-5 h-5 dark:text-white transition-colors duration-300" />
-                  <>
-                    {!collapsed && (
-                      <div
-                        className={`flex items-center gap-2 ml-2 transition-all duration-300 ease-in-out
-                    ${
-                      collapsed
-                        ? "max-w-0 opacity-0 overflow-hidden"
-                        : "max-w-50 opacity-100"
-                    }
-                    `}
-                      >
-                        <span className="font-medium ml-2 dark:text-white text-sm">
-                          {item.label}
+                  {!collapsed && (
+                    <div
+                      className={`flex items-center gap-2 ml-2 transition-all duration-300 ease-in-out ${
+                        collapsed
+                          ? "max-w-0 opacity-0 overflow-hidden"
+                          : "max-w-50 opacity-100"
+                      }`}
+                    >
+                      <span className="font-medium ml-2 dark:text-white text-sm">
+                        {item.label}
+                      </span>
+                      {item.badge && (
+                        <span className="px-2 py-1 text-xs bg-red-500 text-white rounded-full">
+                          {item.badge}
                         </span>
-                        {item.badge && (
-                          <span className="px-2 py-1 text-xs bg-red-500 text-white rounded-full">
-                            {item.badge}
-                          </span>
-                        )}
-                        {item.count && (
-                          <span
-                            className="px-2 py-1 text-xs bg-slate-200 dark:bg-slate-700 text-slate-600
-                      dark:text-slate-300 rounded-full "
-                          >
-                            {item.count}
-                          </span>
-                        )}
-                      </div>
-                    )}
-                  </>
+                      )}
+                      {item.count && (
+                        <span className="px-2 py-1 text-xs bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">
+                          {item.count}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
-                {/* Keeping this code to use in the future
+              </NavLink>
+              {/* Keeping this code to use in the future
                 {item.submenu && (
                   <ChevronDown className="w-4 h-4 transition-transformm dark:text-white" />
                 )}
                   */}
-              </button>
+
               {/* Sub Menus */}
               <div className="ml-8 mt-2 space-y-1">
                 {/* Keeping this code to use in the future
