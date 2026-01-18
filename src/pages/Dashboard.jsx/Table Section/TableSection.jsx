@@ -4,14 +4,18 @@ import { getStatusColor, topProducts } from "../../../constants";
 import OrdersTable from "./OrdersTable";
 import ProductsTable from "./ProductsTable";
 
-const TableSection = () => {
+const TableSection = ({ tables }) => {
   return (
     <div className="space-y-6">
-      {/*Recent Orders Table*/}
-      <OrdersTable />
+      {tables.map((table, index) => {
+        const TableComponent = table.component;
 
-      {/*Top Products*/}
-      <ProductsTable />
+        return (
+          <div key={index}>
+            <TableComponent />
+          </div>
+        );
+      })}
     </div>
   );
 };

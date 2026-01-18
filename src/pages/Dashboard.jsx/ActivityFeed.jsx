@@ -2,7 +2,7 @@ import { Clock } from "lucide-react";
 import React from "react";
 import { activities } from "../../constants";
 
-const ActivityFeed = () => {
+const ActivityFeed = ({ activities }) => {
   return (
     <div
       className=" bg-white dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl
@@ -30,6 +30,7 @@ const ActivityFeed = () => {
               <div
                 className="flex items-start space-x-4 p-3 rounded-xl hover:bg-slate-50 
             dark:hover:bg-slate-800/50 transition-colors"
+                key={index}
               >
                 <div className={`p-2 rounded-lg ${activity.bgColor}`}>
                   <activity.icon className={`w-4 h-4 ${activity.color}`} />

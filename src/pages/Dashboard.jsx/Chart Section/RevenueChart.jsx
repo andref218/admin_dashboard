@@ -12,7 +12,7 @@ import { revenueDataChart } from "../../../constants";
 
 const RevenueChart = () => {
   const bestMonth = revenueDataChart.reduce((prev, current) =>
-    current.revenue > prev.revenue ? current : prev
+    current.revenue > prev.revenue ? current : prev,
   );
 
   return (

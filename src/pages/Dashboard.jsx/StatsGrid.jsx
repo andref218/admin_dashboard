@@ -2,7 +2,7 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import React from "react";
 import { stats } from "../../constants";
 
-const StatsGrid = () => {
+const StatsGrid = ({ stats }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
       {stats.map((stat, statIndex) => {

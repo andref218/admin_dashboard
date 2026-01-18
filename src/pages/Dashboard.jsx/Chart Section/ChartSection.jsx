@@ -2,15 +2,20 @@ import React from "react";
 import RevenueChart from "./RevenueChart";
 import SalesChart from "./SalesChart";
 
-const ChartSection = () => {
+const ChartSection = ({ charts }) => {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-      <div className="xl:col-span-2">
-        <RevenueChart />
-      </div>
-      <div className="space-y-6">
-        <SalesChart />
-      </div>
+      {charts.map((chart, index) => {
+        const ChartComponent = chart.component;
+        const colSpanClass =
+          chart.name === "Revenue Chart" ? "xl:col-span-2" : "";
+
+        return (
+          <div key={index} className={colSpanClass}>
+            <ChartComponent />
+          </div>
+        );
+      })}
     </div>
   );
 };

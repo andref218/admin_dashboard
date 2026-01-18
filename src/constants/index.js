@@ -15,6 +15,11 @@ import {
   User,
   Users,
 } from "lucide-react";
+import RevenueChart from "../pages/Dashboard.jsx/Chart Section/RevenueChart";
+import SalesChart from "../pages/Dashboard.jsx/Chart Section/SalesChart";
+import OrdersTable from "../pages/Dashboard.jsx/Table Section/OrdersTable";
+import ProductsTable from "../pages/Dashboard.jsx/Table Section/ProductsTable";
+import ActivityFeed from "../pages/Dashboard.jsx/ActivityFeed";
 
 export const menuItems = [
   {
@@ -294,4 +299,17 @@ export const activities = [
     color: "text-red-500",
     bgColor: "bg-red-100 dark:bg-red-900/30",
   },
+];
+
+export const dashboardCharts = [
+  { id: 1, name: "Revenue Chart", component: RevenueChart },
+  { id: 2, name: "Sales by Category", component: SalesChart },
+];
+export const dashboardTables = [
+  { id: 1, name: "Recent Orders", component: OrdersTable },
+  { id: 2, name: "Top Products", component: ProductsTable },
+];
+
+export const activitiesComponent = [
+  { id: 1, name: "Activity Feed", component: ActivityFeed },
 ];

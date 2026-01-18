@@ -1,6 +1,7 @@
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
+import { useState } from "react";
 
 const AppLayout = ({
   sideBarCollapsed,
@@ -8,6 +9,7 @@ const AppLayout = ({
   darkMode,
   setDarkMode,
 }) => {
+  const [searchItem, setSearchItem] = useState("");
   return (
     <div
       className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50
@@ -23,11 +25,13 @@ const AppLayout = ({
             onToggleSideBar={() => setSideBarCollapsed(!sideBarCollapsed)}
             darkMode={darkMode}
             onToggleTheme={() => setDarkMode((prev) => !prev)}
+            searchItem={searchItem}
+            setSearchItem={setSearchItem}
           />
           {/* Main content */}
           <main className="flex-1 overflow-y-auto">
             <div className="p-6 space-y-6">
-              <Outlet />
+              <Outlet context={searchItem} />
             </div>
           </main>
         </div>
