@@ -74,7 +74,7 @@ const Header = ({
         </div>
         {/*Right */}
         <div className="flex items-center space-x-3">
-          {/*Quick action */}
+          {/*Quick action - Keeping it here in case its needed in the future
           <button
             className="hidden lg:flex items-center space-x-2 py-2 px-4 bg-linear-to-r
           from-blue-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all
@@ -83,6 +83,7 @@ const Header = ({
             <Plus className="w-4 h-4" />
             <span className="text-sm font-medium">New</span>
           </button>
+          */}
           {/*Toggle */}
           <button
             onClick={onToggleTheme}

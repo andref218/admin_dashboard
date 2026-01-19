@@ -1,7 +1,7 @@
 import { ChevronDown, Zap } from "lucide-react";
 import React, { useState } from "react";
 import { menuItems } from "../constants";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Sidebar = ({ collapsed }) => {
   return (
@@ -13,30 +13,34 @@ const Sidebar = ({ collapsed }) => {
       relative z-10  `}
     >
       {/*Logo*/}
-      <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50 flex items-center">
-        {/* Fixed Logo */}
-        <div
-          className="w-10 h-10 bg-linear-to-r from-blue-600 to-purple-600 rounded-xl
-      flex items-center justify-center shadow-lg shrink-0"
-        >
-          <Zap className="w-6 h-6 text-white" />
-        </div>
-
-        <div className={`transition-all duration-300 ease-in-out ml-3 flex-1`}>
+      <Link to="/dashboard">
+        <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50 flex items-center">
+          {/* Fixed Logo */}
           <div
-            className={`overflow-hidden transition-all duration-300 ease-in-out
+            className="w-10 h-10 bg-linear-to-r from-blue-600 to-purple-600 rounded-xl
+      flex items-center justify-center shadow-lg shrink-0"
+          >
+            <Zap className="w-6 h-6 text-white" />
+          </div>
+
+          <div
+            className={`transition-all duration-300 ease-in-out ml-3 flex-1`}
+          >
+            <div
+              className={`overflow-hidden transition-all duration-300 ease-in-out
         ${collapsed ? "max-h-0 opacity-0" : "max-h-20 opacity-100"}
       `}
-          >
-            <h1 className="text-xl font-bold text-slate-800 dark:text-white">
-              Dash
-            </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Admin Panel
-            </p>
+            >
+              <h1 className="text-xl font-bold text-slate-800 dark:text-white">
+                Dash
+              </h1>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Admin Panel
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
 
       {/*Navigation Bar*/}
       <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
