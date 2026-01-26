@@ -1,7 +1,7 @@
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { useDeferredValue, useEffect, useState } from "react";
 
 const AppLayout = ({
   sideBarCollapsed,
@@ -10,6 +10,11 @@ const AppLayout = ({
   setDarkMode,
 }) => {
   const [searchItem, setSearchItem] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    setSearchItem("");
+  }, [location.pathname]);
   return (
     <div
       className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50

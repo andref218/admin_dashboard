@@ -22,3 +22,15 @@ export const pageSubtitles = {
   "/reports": "Detailed reports and insights",
   "/settings": "Manage application settings",
 };
+
+export const searchPlaceholders = {
+  "/dashboard": "Search anything...",
+  "/analytics": "Search analytics data...",
+  "/users": "Search users...",
+  "/inventory": "Search products...",
+  "/transactions": "Search transactions...",
+  "/messages": "Search messages...",
+  "/calendar": "Search events...",
+  "/reports": "Search reports...",
+  "/settings": "Search settings...",
+};

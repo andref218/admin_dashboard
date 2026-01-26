@@ -10,7 +10,11 @@ import {
   Sun,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
-import { pageSubtitles, pageTitles } from "../constants/pageTitles";
+import {
+  pageSubtitles,
+  pageTitles,
+  searchPlaceholders,
+} from "../constants/pageTitles";
 
 const Header = ({
   onToggleSideBar,
@@ -22,8 +26,9 @@ const Header = ({
   const location = useLocation();
 
   const title = pageTitles[location.pathname] || "";
-
   const subTitle = pageSubtitles[location.pathname] || "";
+  const placeholderSearch =
+    searchPlaceholders[location.pathname] || "Search anything...";
 
   return (
     <div
@@ -57,7 +62,7 @@ const Header = ({
             <input
               type="text"
               value={searchItem}
-              placeholder="Search anything..."
+              placeholder={placeholderSearch}
               className="w-full pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200
                dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 
                focus:outline-none focus:ring-2 focus:ring-blue-500/80 focus:border-transparent transition-all
