@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { users } from "../../constants/users";
-import { MoreVertical, Search } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import { useOutletContext } from "react-router-dom";
 
 const statusStyles = {
@@ -11,12 +11,28 @@ const statusStyles = {
 
 const UsersTable = () => {
   const searchItem = useOutletContext();
+  const [filteredUsers, setFilteredUsers] = useState(users);
 
-  const filteredUsers = users.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchItem.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchItem.toLowerCase()),
-  );
+  const searchUser = (query) => {
+    const trimmedQuery = query.trim().toLowerCase();
+    const queryWords = trimmedQuery.split(/\s+/);
+
+    const filteredUsers = users.filter((user) => {
+      const name = user.name.toLowerCase();
+      const email = user.email.toLowerCase();
+
+      return queryWords.every(
+        (word) => name.includes(word) || email.includes(word),
+      );
+    });
+
+    setFilteredUsers(filteredUsers);
+  };
+
+  useEffect(() => {
+    searchUser(searchItem);
+  }, [searchItem]);
+
   return (
     <div
       className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-xl border

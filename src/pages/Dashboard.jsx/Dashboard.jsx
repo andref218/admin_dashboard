@@ -35,25 +35,31 @@ const DashBoard = () => {
   }
 
   // Global Search: Filter every type of data
+  const matchesSearch = (text, search) => {
+    const words = search.trim().toLowerCase().split(/\s+/);
+    const target = text.toLowerCase();
+
+    return words.every((word) => target.includes(word));
+  };
 
   // Fiter Stats Cards by title of the cards
   const filteredStats = stats.filter((stat) =>
-    stat.title.toLowerCase().includes(searchItem.trim().toLowerCase()),
+    matchesSearch(stat.title, searchItem),
   );
 
   // Filter charts in Chart Section
   const filteredCharts = dashboardCharts.filter((chart) =>
-    chart.name.toLowerCase().includes(searchItem.trim().toLowerCase()),
+    matchesSearch(chart.name, searchItem),
   );
 
   // Filter tables in Table Section
   const filteredTables = dashboardTables.filter((table) =>
-    table.name.toLowerCase().includes(searchItem.trim().toLowerCase()),
+    matchesSearch(table.name, searchItem),
   );
 
   //Filter Activity Section
   const filteredActivitySection = activitiesComponent.filter((activity) =>
-    activity.name.toLowerCase().includes(searchItem.trim().toLowerCase()),
+    matchesSearch(activity.name, searchItem),
   );
 
   const noResults =
