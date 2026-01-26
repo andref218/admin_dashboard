@@ -1,0 +1,161 @@
+import { Users, UserCheck, UserPlus, UserX } from "lucide-react";
+
+export const userStats = [
+  {
+    id: 1,
+    title: "Total Users",
+    value: "12,480",
+    change: "+4.2%",
+    trend: "up",
+    description: "vs last month",
+    icon: Users,
+    bgColor: "bg-blue-100 dark:bg-blue-500/20",
+    textColor: "text-blue-600 dark:text-blue-400",
+  },
+  {
+    id: 2,
+    title: "Active Users",
+    value: "8,932",
+    change: "+2.1%",
+    trend: "up",
+    description: "currently active",
+    icon: UserCheck,
+    bgColor: "bg-emerald-100 dark:bg-emerald-500/20",
+    textColor: "text-emerald-600 dark:text-emerald-400",
+  },
+  {
+    id: 3,
+    title: "New Users",
+    value: "1,284",
+    change: "+12.7%",
+    trend: "up",
+    description: "this month",
+    icon: UserPlus,
+    bgColor: "bg-purple-100 dark:bg-purple-500/20",
+    textColor: "text-purple-600 dark:text-purple-400",
+  },
+  {
+    id: 4,
+    title: "Churned Users",
+    value: "342",
+    change: "-1.8%",
+    trend: "down",
+    description: "lost users",
+    icon: UserX,
+    bgColor: "bg-red-100 dark:bg-red-500/20",
+    textColor: "text-red-600 dark:text-red-400",
+  },
+];
+
+export const users = [
+  {
+    id: "usr_9f83kls2",
+    name: "John Doe",
+    email: "john.doe@email.com",
+    role: "Admin",
+    status: "Active",
+    lastActive: "2 hours ago",
+    joinedAt: "Jan 12, 2024",
+    avatar:
+      "https://ui-avatars.com/api/?name=John+Doe&background=random&size=128",
+  },
+  {
+    id: "usr_3h72kd91",
+    name: "Emily Carter",
+    email: "emily.carter@email.com",
+    role: "User",
+    status: "Suspended",
+    lastActive: "5 days ago",
+    joinedAt: "Nov 3, 2023",
+    avatar:
+      "https://ui-avatars.com/api/?name=Emily+Carter&background=random&size=128",
+  },
+  {
+    id: "usr_a92kd82f",
+    name: "Michael Smith",
+    email: "michael.smith@email.com",
+    role: "Moderator",
+    status: "Active",
+    lastActive: "10 minutes ago",
+    joinedAt: "Feb 20, 2024",
+    avatar:
+      "https://ui-avatars.com/api/?name=Michael+Smith&background=random&size=128",
+  },
+  {
+    id: "usr_kd83h19s",
+    name: "Sarah Johnson",
+    email: "sarah.johnson@email.com",
+    role: "User",
+    status: "Pending",
+    lastActive: "1 day ago",
+    joinedAt: "Dec 15, 2023",
+    avatar:
+      "https://ui-avatars.com/api/?name=Sarah+Johnson&background=random&size=128",
+  },
+  {
+    id: "usr_28dk39sl",
+    name: "David Brown",
+    email: "david.brown@email.com",
+    role: "User",
+    status: "Active",
+    lastActive: "3 hours ago",
+    joinedAt: "Aug 9, 2023",
+    avatar:
+      "https://ui-avatars.com/api/?name=David+Brown&background=random&size=128",
+  },
+  {
+    id: "usr_f83k29sl",
+    name: "Jessica Wilson",
+    email: "jessica.wilson@email.com",
+    role: "Admin",
+    status: "Active",
+    lastActive: "30 minutes ago",
+    joinedAt: "Mar 5, 2024",
+    avatar:
+      "https://ui-avatars.com/api/?name=Jessica+Wilson&background=random&size=128",
+  },
+  {
+    id: "usr_72kdl29a",
+    name: "Daniel Miller",
+    email: "daniel.miller@email.com",
+    role: "User",
+    status: "Suspended",
+    lastActive: "2 weeks ago",
+    joinedAt: "Jul 21, 2023",
+    avatar:
+      "https://ui-avatars.com/api/?name=Daniel+Miller&background=random&size=128",
+  },
+  {
+    id: "usr_9dk28slq",
+    name: "Olivia Anderson",
+    email: "olivia.anderson@email.com",
+    role: "User",
+    status: "Active",
+    lastActive: "6 hours ago",
+    joinedAt: "Oct 11, 2023",
+    avatar:
+      "https://ui-avatars.com/api/?name=Olivia+Anderson&background=random&size=128",
+  },
+  {
+    id: "usr_3ks82ld9",
+    name: "James Thompson",
+    email: "james.thompson@email.com",
+    role: "Moderator",
+    status: "Pending",
+    lastActive: "12 hours ago",
+    joinedAt: "Jan 30, 2024",
+    avatar:
+      "https://ui-avatars.com/api/?name=James+Thompson&background=random&size=128",
+  },
+  {
+    id: "usr_k39dl28s",
+    name: "Sophia Martinez",
+    email: "sophia.martinez@email.com",
+    role: "User",
+    status: "Active",
+    lastActive: "1 hour ago",
+    joinedAt: "Sep 18, 2023",
+    avatar:
+      "https://ui-avatars.com/api/?name=Sophia+Martinez&background=random&size=128",
+  },
+];

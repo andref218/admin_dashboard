@@ -29,7 +29,7 @@ const ActivityFeed = ({ activities }) => {
             return (
               <div
                 className="flex items-start space-x-4 p-3 rounded-xl hover:bg-slate-50 
-            dark:hover:bg-slate-800/50 transition-colors"
+            dark:hover:bg-slate-800/50 transition-colors cursor-pointer"
                 key={index}
               >
                 <div className={`p-2 rounded-lg ${activity.bgColor}`}>

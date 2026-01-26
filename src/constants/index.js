@@ -96,12 +96,6 @@ export const menuItems = [
     label: "Reports",
     path: "/reports",
   },
-  {
-    id: "settings",
-    icon: Settings,
-    label: "Settings",
-    path: "/settings",
-  },
 ];
 
 export const stats = [
@@ -117,7 +111,7 @@ export const stats = [
   },
   {
     title: "Active Users",
-    value: "8,455",
+    value: "8,932",
     change: "+30%",
     trend: "up",
     icon: Users,

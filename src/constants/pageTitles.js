@@ -10,3 +10,15 @@ export const pageTitles = {
   "/reports": "Reports",
   "/settings": "Settings",
 };
+
+export const pageSubtitles = {
+  "/dashboard": "Welcome back, André!",
+  "/analytics": "Business performance overview",
+  "/users": "Manage and monitor all users",
+  "/inventory": "Track your products",
+  "/transactions": "Review all transactions",
+  "/messages": "See all messages",
+  "/calendar": "Your schedule and events",
+  "/reports": "Detailed reports and insights",
+  "/settings": "Manage application settings",
+};
