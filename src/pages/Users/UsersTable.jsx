@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { users } from "../../constants/users";
-import { MoreVertical } from "lucide-react";
 import { useOutletContext } from "react-router-dom";
-import { ArrowUp, ArrowDown } from "lucide-react";
+import {
+  ArrowUp,
+  ArrowDown,
+  Eye,
+  Pencil,
+  Trash2,
+  Mail,
+  MoreVertical,
+} from "lucide-react";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const statusStyles = {
   Active: "bg-emerald-100 text-emerald-600",
@@ -17,7 +26,10 @@ const UsersTable = () => {
     key: null,
     direction: "asc",
   });
+  const [openMenuId, setOpenMenuId] = useState(null);
+  const [menuPosition, setMenuPosition] = useState(null);
 
+  // Converts a "lastActive" string into minutes
   const lastActiveToMinutes = (value) => {
     // If the value is null, undefined, or empty, return Infinity
     // This ensures unknown values are treated as "very far in the past" for sorting
@@ -38,6 +50,8 @@ const UsersTable = () => {
     return Infinity;
   };
 
+  // Sorts an array of users by the given key, handling "lastActive" specially and
+  // respecting the current sort direction
   const sortUsers = (usersToSort, key) => {
     if (!key) return usersToSort;
 
@@ -60,6 +74,7 @@ const UsersTable = () => {
     });
   };
 
+  // Toggles sorting direction for a column and updates the sort configuration
   const handleSort = (key) => {
     setSortConfig((prev) => ({
       key,
@@ -67,6 +82,7 @@ const UsersTable = () => {
     }));
   };
 
+  // Filters users by search query and updates the state with the sorted results
   const searchUser = (query) => {
     const trimmedQuery = query.trim().toLowerCase();
     const queryWords = trimmedQuery.split(/\s+/);
@@ -86,6 +102,7 @@ const UsersTable = () => {
     setFilteredUsers(sorted);
   };
 
+  // Displays the appropriate sort arrow for a column based on the current sort direction
   const SortIcon = ({ column }) => {
     if (sortConfig.key !== column) return null;
     return sortConfig.direction === "asc" ? (
@@ -95,9 +112,82 @@ const UsersTable = () => {
     );
   };
 
+  // Calculates and sets the dropdown menu position so it stays within the viewport boundaries
+  const calculateMenuPosition = (buttonId) => {
+    const button = document.getElementById(`menu-btn-${buttonId}`);
+    if (!button) return;
+
+    const rect = button.getBoundingClientRect();
+    const menuWidth = 180;
+    const menuHeight = 160;
+
+    // Vertical position: below the button
+    let top = rect.bottom + window.scrollY;
+
+    // If it exceeds the bottom of the viewport, display above the button
+    if (top + menuHeight > window.scrollY + window.innerHeight) {
+      top = rect.top - menuHeight + window.scrollY;
+    }
+
+    // Horizontal position: aligned to the left of the button
+    let left = rect.left + window.scrollX;
+
+    // Adjust if it exceeds the right edge of the viewport
+    if (left + menuWidth > window.scrollX + window.innerWidth) {
+      left = window.scrollX + window.innerWidth - menuWidth - 8; // 8px margin
+    }
+
+    // Adjust if it exceeds the left edge of the viewport
+    if (left < window.scrollX + 8) {
+      left = window.scrollX + 8; // 8px margin
+    }
+
+    setMenuPosition({ top, left });
+  };
+
+  // Re-filters and sorts users whenever the search query or sort configuration changes
   useEffect(() => {
     searchUser(searchItem);
   }, [searchItem, sortConfig]);
+
+  // Updates the dropdown menu position on scroll or resize when it's open
+  useEffect(() => {
+    if (!openMenuId) return;
+
+    const handleScrollResize = () => calculateMenuPosition(openMenuId);
+
+    window.addEventListener("scroll", handleScrollResize, true);
+    window.addEventListener("resize", handleScrollResize);
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollResize, true);
+      window.removeEventListener("resize", handleScrollResize);
+    };
+  }, [openMenuId]);
+
+  // Closes the dropdown menu when clicking outside of it or its button
+  useEffect(() => {
+    if (!openMenuId) return;
+
+    const handleClickOutside = (event) => {
+      const menu = document.getElementById(`menu-dropdown-${openMenuId}`);
+      const button = document.getElementById(`menu-btn-${openMenuId}`);
+      if (
+        menu &&
+        !menu.contains(event.target) &&
+        button &&
+        !button.contains(event.target)
+      ) {
+        setOpenMenuId(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenuId]);
 
   return (
     <div
@@ -177,7 +267,7 @@ const UsersTable = () => {
               filteredUsers.map((user) => (
                 <tr
                   key={user.id}
-                  className="border-b border-slate-200/50 dark:border-slate-700/50
+                  className="relative border-b border-slate-200/50 dark:border-slate-700/50
                 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition cursor-pointer"
                 >
                   {/* User */}
@@ -219,18 +309,91 @@ const UsersTable = () => {
                   {/* Actions */}
                   <td className="px-6 py-4">
                     <button
+                      id={`menu-btn-${user.id}`}
+                      onClick={() => {
+                        setOpenMenuId(openMenuId === user.id ? null : user.id);
+                        calculateMenuPosition(user.id);
+                      }}
                       className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700/50 cursor-pointer"
-                      title="Copy User ID"
+                      title=""
                     >
                       <MoreVertical className="w-4 h-4 dark:text-white" />
                     </button>
+                    {/* Actions Dropdown using React Portal */}
+                    {openMenuId === user.id &&
+                      menuPosition &&
+                      createPortal(
+                        <AnimatePresence>
+                          <motion.div
+                            key={user.id}
+                            id={`menu-dropdown-${user.id}`}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.1, ease: "linear" }}
+                            style={{
+                              position: "fixed",
+                              top: menuPosition.top,
+                              left: menuPosition.left,
+                              width: "10rem",
+                              zIndex: 50,
+                            }}
+                            className="bg-white dark:bg-slate-800 border border-slate-200 
+                            dark:border-slate-700 rounded-lg shadow-lg"
+                          >
+                            {/* View details */}
+                            <button
+                              onClick={() => setOpenMenuId(null)} // close menu on click
+                              className="flex items-center gap-2 w-full px-4 py-2 text-sm
+                          hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-white"
+                            >
+                              <Eye className="w-4 h-4" />
+                              View details
+                            </button>
+
+                            {/* Edit user */}
+                            <button
+                              onClick={() => setOpenMenuId(null)}
+                              className="flex items-center gap-2 w-full px-4 py-2 text-sm
+                          hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-white"
+                            >
+                              <Pencil className="w-4 h-4" />
+                              Edit user
+                            </button>
+
+                            {/* Copy email */}
+                            <button
+                              onClick={() => setOpenMenuId(null)}
+                              className="flex items-center gap-2 w-full px-4 py-2 text-sm
+                          hover:bg-slate-100 dark:hover:bg-slate-700 dark:text-white"
+                            >
+                              <Mail className="w-4 h-4" />
+                              Copy email
+                            </button>
+
+                            {/* Delete user */}
+                            <button
+                              onClick={() => setOpenMenuId(null)}
+                              className="flex items-center gap-2 w-full px-4 py-2 text-sm
+                          hover:bg-red-100 dark:hover:bg-red-500/20 text-red-600"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                              Delete user
+                            </button>
+                          </motion.div>
+                        </AnimatePresence>,
+                        document.body,
+                      )}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
                 <td colSpan={6}>
-                  <div className="w-full flex items-center justify-center py-10 text-slate-500 dark:text-slate-200">
+                  <div
+                    className="w-full flex items-center justify-center py-10 text-slate-500 
+                  dark:text-slate-200"
+                  >
                     No users found.
                   </div>
                 </td>
