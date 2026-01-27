@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { users } from "../../constants/users";
 import { MoreVertical } from "lucide-react";
 import { useOutletContext } from "react-router-dom";
+import { ArrowUp, ArrowDown } from "lucide-react";
 
 const statusStyles = {
   Active: "bg-emerald-100 text-emerald-600",
@@ -12,6 +13,59 @@ const statusStyles = {
 const UsersTable = () => {
   const searchItem = useOutletContext();
   const [filteredUsers, setFilteredUsers] = useState(users);
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "asc",
+  });
+
+  const lastActiveToMinutes = (value) => {
+    // If the value is null, undefined, or empty, return Infinity
+    // This ensures unknown values are treated as "very far in the past" for sorting
+    if (!value) return Infinity;
+
+    // Split the string into two parts: the number and the unit
+    const [amount, unit] = value.split(" ");
+
+    // Convert the amount from string to number
+    const n = Number(amount);
+
+    //convert all values to minutes
+    if (unit.startsWith("minute")) return n;
+    if (unit.startsWith("hour")) return n * 60;
+    if (unit.startsWith("day")) return n * 1440;
+
+    // If the unit is unrecognized, return Infinity as a fallback
+    return Infinity;
+  };
+
+  const sortUsers = (usersToSort, key) => {
+    if (!key) return usersToSort;
+
+    return [...usersToSort].sort((a, b) => {
+      // Get the values for the given key
+      let aValue = a[key];
+      let bValue = b[key];
+
+      if (key === "lastActive") {
+        aValue = lastActiveToMinutes(aValue);
+        bValue = lastActiveToMinutes(bValue);
+      } else {
+        aValue = aValue.toLowerCase();
+        bValue = bValue.toLowerCase();
+      }
+
+      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+  };
+
+  const handleSort = (key) => {
+    setSortConfig((prev) => ({
+      key,
+      direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc",
+    }));
+  };
 
   const searchUser = (query) => {
     const trimmedQuery = query.trim().toLowerCase();
@@ -20,18 +74,30 @@ const UsersTable = () => {
     const filteredUsers = users.filter((user) => {
       const name = user.name.toLowerCase();
       const email = user.email.toLowerCase();
+      const role = user.role.toLowerCase();
 
       return queryWords.every(
-        (word) => name.includes(word) || email.includes(word),
+        (word) =>
+          name.includes(word) || email.includes(word) || role.includes(word),
       );
     });
+    const sorted = sortUsers(filteredUsers, sortConfig.key);
 
-    setFilteredUsers(filteredUsers);
+    setFilteredUsers(sorted);
+  };
+
+  const SortIcon = ({ column }) => {
+    if (sortConfig.key !== column) return null;
+    return sortConfig.direction === "asc" ? (
+      <ArrowUp className="w-3 h-3 ml-1" />
+    ) : (
+      <ArrowDown className="w-3 h-3 ml-1" />
+    );
   };
 
   useEffect(() => {
     searchUser(searchItem);
-  }, [searchItem]);
+  }, [searchItem, sortConfig]);
 
   return (
     <div
@@ -39,8 +105,8 @@ const UsersTable = () => {
      border-slate-200/50 dark:border-slate-700/50 overflow-hidden"
     >
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50">
+      <div className="flex items-center justify-between ">
+        <div className="p-6 border-slate-200/50 dark:border-slate-700/50">
           <h3 className="text-lg font-bold text-slate-800 dark:text-white">
             Users
           </h3>
@@ -55,20 +121,50 @@ const UsersTable = () => {
         <table className="w-full text-left">
           <thead className="bg-slate-100 dark:bg-slate-800">
             <tr>
-              <th className="p-4 px-6 text-sm font-semibold dark:text-slate-400">
-                User
+              <th
+                onClick={() => handleSort("name")}
+                className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
+              >
+                <div className="flex items-center">
+                  User
+                  <SortIcon column="name" />
+                </div>
               </th>
-              <th className="p-4 px-6 text-sm font-semibold dark:text-slate-400">
-                Email
+              <th
+                onClick={() => handleSort("email")}
+                className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
+              >
+                <div className="flex items-center">
+                  Email
+                  <SortIcon column="email" />
+                </div>
               </th>
-              <th className="p-4 px-6 text-sm font-semibold dark:text-slate-400">
-                Role
+              <th
+                onClick={() => handleSort("role")}
+                className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
+              >
+                <div className="flex items-center">
+                  Role
+                  <SortIcon column="role" />
+                </div>
               </th>
-              <th className="p-4 px-6 text-sm font-semibold dark:text-slate-400">
-                Status
+              <th
+                onClick={() => handleSort("status")}
+                className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
+              >
+                <div className="flex items-center">
+                  Status
+                  <SortIcon column="status" />
+                </div>
               </th>
-              <th className="p-4 px-6 text-sm font-semibold dark:text-slate-400">
-                Last active
+              <th
+                onClick={() => handleSort("lastActive")}
+                className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
+              >
+                <div className="flex items-center">
+                  Last Active
+                  <SortIcon column="lastActive" />
+                </div>
               </th>
               <th className="p-4 text-sm font-semibold dark:text-slate-400 ">
                 Actions
