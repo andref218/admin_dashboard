@@ -1,12 +1,12 @@
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ConfirmDeleteModal = ({ user, onConfirm, onCancel }) => {
-  if (!user) return null;
+const ConfirmDeleteModal = ({ user, users, onConfirm, onCancel }) => {
+  if (!user && (!users || users.length === 0)) return null;
 
   return createPortal(
     <AnimatePresence>
-      {user && (
+      {(user || (users && users.length > 0)) && (
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center"
           initial={{ opacity: 0 }}
@@ -33,12 +33,15 @@ const ConfirmDeleteModal = ({ user, onConfirm, onCancel }) => {
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
             <h3 className="text-lg font-bold text-slate-800 dark:text-white">
-              Delete user
+              Delete {users ? "users" : "user"}
             </h3>
 
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-              Are you sure you want to delete{" "}
-              <span className=" font-extrabold">{user.name}</span>?
+              Are you sure you want to delete this{" "}
+              <span className=" font-extrabold">
+                {users ? `${users.length} users` : user.name}
+              </span>
+              ?
             </p>
 
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">

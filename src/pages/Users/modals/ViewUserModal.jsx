@@ -56,7 +56,8 @@ const ViewUserModal = ({ user, onClose }) => {
             <div className="mt-6 flex justify-end">
               <button
                 onClick={onClose}
-                className="px-4 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-white cursor-pointer"
+                className="px-4 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 
+                hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-white cursor-pointer"
               >
                 Close
               </button>
