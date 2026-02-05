@@ -2,6 +2,45 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ================= LIGHT MODE ================= */
+
 body {
   @apply text-black;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* ================= DARK MODE ================= */
+
+/* Tailwind adds class 'dark' to html, so target html.dark */
+html.dark body::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+html.dark body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Firefox dark mode */
+html.dark body {
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
