@@ -5,21 +5,26 @@ import {
   CreditCard,
   DollarSign,
   Eye,
-  FileText,
   LayoutDashboard,
-  MessageSquare,
-  Package,
   Settings,
   ShoppingBag,
   ShoppingCart,
   User,
   Users,
+  Percent,
+  TrendingUp,
+  Repeat,
 } from "lucide-react";
 import RevenueChart from "../pages/Dashboard.jsx/Chart Section/RevenueChart";
 import SalesChart from "../pages/Dashboard.jsx/Chart Section/SalesChart";
 import OrdersTable from "../pages/Dashboard.jsx/Table Section/OrdersTable";
 import ProductsTable from "../pages/Dashboard.jsx/Table Section/ProductsTable";
 import ActivityFeed from "../pages/Dashboard.jsx/ActivityFeed";
+import RevenueVSTargetChart from "../pages/Analytics/ChartSection/RevenueVSTargetChart";
+import TopCountriesChart from "../pages/Analytics/ChartSection/TopCountriesChart";
+import UserActivityAreaChart from "../pages/Analytics/ChartSection/UserActivityAreaChart";
+import ProductsRadarChart from "../pages/Analytics/ChartSection/ProductsRadarChart";
+import OrdersVsPageViewsScatter from "../pages/Analytics/ChartSection/OrdersVsPageViewsScatterChart";
 
 export const menuItems = [
   {
@@ -64,6 +69,7 @@ export const menuItems = [
       { id: "customers", label: "Customers" },
     ],
   },
+  /*
   {
     id: "inventory",
     icon: Package,
@@ -83,19 +89,19 @@ export const menuItems = [
     label: "Messages",
     path: "/messages",
     badge: 12,
-  },
+  },*/
   {
     id: "calendar",
     icon: Calendar,
     label: "Calendar",
     path: "/calendar",
   },
-  {
+  /*{
     id: "reports",
     icon: FileText,
     label: "Reports",
     path: "/reports",
-  },
+  },*/
 ];
 
 export const stats = [
@@ -306,4 +312,113 @@ export const dashboardTables = [
 
 export const activitiesComponent = [
   { id: 1, name: "Activity Feed", component: ActivityFeed },
+];
+
+export const analyticsStats = [
+  {
+    title: "Conversion Rate",
+    value: "3.8%",
+    change: "+0.6%",
+    trend: "up",
+    progressValue: 38,
+    icon: Percent,
+    color: "from-indigo-500 to-purple-600",
+    bgColor: "bg-indigo-50 dark:bg-indigo-900/20",
+    textColor: "text-indigo-600 dark:text-indigo-400",
+  },
+  {
+    title: "Avg Order Value",
+    value: "$86.40",
+    change: "+4.1%",
+    trend: "up",
+    progressValue: 72,
+    icon: BarChart3,
+    color: "from-emerald-500 to-teal-600",
+    bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
+    textColor: "text-emerald-600 dark:text-emerald-400",
+  },
+  {
+    title: "Revenue Growth",
+    value: "+12.3%",
+    change: "+2.1%",
+    trend: "up",
+    progressValue: 40,
+    icon: TrendingUp,
+    color: "from-blue-500 to-cyan-600",
+    bgColor: "bg-blue-50 dark:bg-blue-900/20",
+    textColor: "text-blue-600 dark:text-blue-400",
+  },
+  {
+    title: "User Retention",
+    value: "68%",
+    change: "-1.2%",
+    trend: "down",
+    progressValue: 60,
+    icon: Repeat,
+    color: "from-orange-500 to-red-600",
+    bgColor: "bg-orange-50 dark:bg-orange-900/20",
+    textColor: "text-orange-600 dark:text-orange-400",
+  },
+];
+
+export const revenueVsTargetData = [
+  { month: "Jan", revenue: 12000, target: 15000 },
+  { month: "Feb", revenue: 14500, target: 15000 },
+  { month: "Mar", revenue: 13200, target: 15000 },
+  { month: "Apr", revenue: 16800, target: 15000 },
+  { month: "May", revenue: 19000, target: 15000 },
+  { month: "Jun", revenue: 21000, target: 15000 },
+  { month: "Jul", revenue: 19500, target: 15000 },
+  { month: "Aug", revenue: 22000, target: 15000 },
+  { month: "Sep", revenue: 20500, target: 15000 },
+  { month: "Oct", revenue: 23000, target: 15000 },
+  { month: "Nov", revenue: 24000, target: 15000 },
+  { month: "Dec", revenue: 26000, target: 15000 },
+];
+
+export const topCountriesData = [
+  { country: "USA", revenue: 84200 },
+  { country: "UK", revenue: 41500 },
+  { country: "Germany", revenue: 36800 },
+  { country: "Portugal", revenue: 14200 },
+  { country: "France", revenue: 12800 },
+];
+
+export const userActivityData = [
+  { month: "Jan", activeUsers: 5000 },
+  { month: "Feb", activeUsers: 6200 },
+  { month: "Mar", activeUsers: 5800 },
+  { month: "Apr", activeUsers: 7000 },
+  { month: "May", activeUsers: 7500 },
+  { month: "Jun", activeUsers: 8000 },
+  { month: "Jul", activeUsers: 7800 },
+  { month: "Aug", activeUsers: 8200 },
+  { month: "Sep", activeUsers: 8500 },
+  { month: "Oct", activeUsers: 9000 },
+  { month: "Nov", activeUsers: 9200 },
+  { month: "Dec", activeUsers: 9500 },
+];
+
+export const radarDataProducts = [
+  { category: "Electronics", value: 85 },
+  { category: "Clothing", value: 70 },
+  { category: "Home", value: 60 },
+  { category: "Books", value: 75 },
+  { category: "Sports", value: 55 },
+];
+
+export const scatterData = [
+  { product: "Electronics", pageViews: 1500, orders: 120, color: "#3b82f6" },
+  { product: "Clothing", pageViews: 1200, orders: 80, color: "#f97316" },
+  { product: "Books", pageViews: 700, orders: 50, color: "#10b981" },
+  { product: "Home", pageViews: 1300, orders: 90, color: "#8b5cf6" },
+  { product: "Sports", pageViews: 900, orders: 60, color: "#f43f5e" },
+];
+
+export const analyticsCharts = [
+  { id: 1, name: "Revenue vs Target", component: RevenueVSTargetChart },
+  { id: 2, name: "Top Countries by Revenue", component: TopCountriesChart },
+  { id: 3, name: "User Activity Over Time", component: UserActivityAreaChart },
+  { id: 4, name: "Product Performance", component: ProductsRadarChart },
+  { id: 5, name: "Orders vs Page Views", component: OrdersVsPageViewsScatter },
 ];

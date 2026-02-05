@@ -1,19 +1,15 @@
 import {
-  Bar,
-  BarChart,
   CartesianGrid,
+  Line,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-import { revenueDataChart } from "../../../constants";
+import { LineChart } from "recharts";
+import { revenueVsTargetData } from "../../../constants";
 
-const RevenueChart = () => {
-  const bestMonth = revenueDataChart.reduce((prev, current) =>
-    current.revenue > prev.revenue ? current : prev,
-  );
-
+const RevenueVSTargetChart = () => {
   return (
     <div
       className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl
@@ -22,32 +18,18 @@ const RevenueChart = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-xl font-bold text-slate-800 dark:text-white">
-            Revenue Chart
+            Revenue vs Target
           </h3>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            Monthly revenue and expenses
+            Monthly revenue compared to target
           </p>
         </div>
-        <div className="flex items-center space-x-4 ">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-linear-to-r from-blue-500 to-purple-600 rounded-full"></div>
-            <div className="text-sm text-slate-600 dark:text-slate-400">
-              <span>Revenue</span>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-linear-to-r from-slate-400 to-slate-500 rounded-full"></div>
-            <div className="text-sm text-slate-600 dark:text-slate-400">
-              <span>Expenses</span>
-            </div>
-          </div>
-        </div>
       </div>
-      <div className=" h-80">
+      <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={revenueDataChart}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+          <LineChart
+            data={revenueVsTargetData}
+            margin={{ top: 10, right: 30, left: 0, bottom: 5 }}
           >
             <CartesianGrid
               strokeDasharray="3 3"
@@ -66,7 +48,7 @@ const RevenueChart = () => {
               fontSize={12}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(value) => `$${value / 1000}k`}
+              tickFormatter={(value) => `$${(value / 1000).toLocaleString()}k`}
             />
             <Tooltip
               contentStyle={{
@@ -75,19 +57,29 @@ const RevenueChart = () => {
                 borderRadius: "12px",
                 boxShadow: "0 10px 40px rgba(0,0,0,0.1)",
               }}
-              formatter={(value) => [`$${value.toLocaleString()}`, ""]}
+              formatter={(value, name) => [
+                `$${value.toLocaleString()}`,
+                name === "revenue" ? "Revenue" : "Target",
+              ]}
             />
-            <Bar
+            {/* Revenue */}
+            <Line
+              type="monotone"
               dataKey="revenue"
-              fill="url(#revenueGradient)"
-              radius={[4, 4, 0, 0]}
-              maxBarSize={40}
+              stroke="#3b82f6"
+              strokeWidth={3}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
             />
-            <Bar
-              dataKey="expenses"
-              fill="url(#expensesGradient)"
-              radius={[4, 4, 0, 0]}
-              maxBarSize={40}
+
+            {/* Target */}
+            <Line
+              type="monotone"
+              dataKey="target"
+              stroke="#f97316"
+              strokeWidth={2}
+              strokeDasharray="5 5"
+              dot={false}
             />
             <defs>
               <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
@@ -99,19 +91,11 @@ const RevenueChart = () => {
                 <stop offset="100%" stopColor="#64748b" />
               </linearGradient>
             </defs>
-          </BarChart>
+          </LineChart>
         </ResponsiveContainer>
       </div>
-      {revenueDataChart.length > 0 && (
-        <p className="text-sm text-slate-500 dark:text-slate-200 mt-4">
-          Best month for revenue:
-          <span className=" ml-1 font-semibold">
-            {bestMonth.month}&nbsp;(${bestMonth.revenue.toLocaleString()})
-          </span>
-        </p>
-      )}
     </div>
   );
 };
 
-export default RevenueChart;
+export default RevenueVSTargetChart;
