@@ -1,13 +1,11 @@
 const ChartSection = ({ charts }) => {
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
       {charts.map((chart, index) => {
         const ChartComponent = chart.component;
-        const colSpanClass =
-          chart.name === "Revenue Chart" ? "xl:col-span-2" : "";
 
         return (
-          <div key={index} className={colSpanClass}>
+          <div key={index}>
             <ChartComponent />
           </div>
         );

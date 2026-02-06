@@ -14,6 +14,8 @@ import {
   Percent,
   TrendingUp,
   Repeat,
+  Package,
+  ClipboardList,
 } from "lucide-react";
 import RevenueChart from "../pages/Dashboard.jsx/Chart Section/RevenueChart";
 import SalesChart from "../pages/Dashboard.jsx/Chart Section/SalesChart";
@@ -40,11 +42,6 @@ export const menuItems = [
     icon: BarChart3,
     label: "Analytics",
     path: "/analytics",
-    submenu: [
-      { id: "overview", label: "Overview" },
-      { id: "reports", label: "Reports" },
-      { id: "insights", label: "Insights" },
-    ],
   },
   {
     id: "users",
@@ -52,11 +49,6 @@ export const menuItems = [
     label: "Users",
     path: "/users",
     count: "1k",
-    submenu: [
-      { id: "all_users", label: "All Users" },
-      { id: "roles", label: "Roles & Permissions" },
-      { id: "activity", label: "User Activity" },
-    ],
   },
   {
     id: "ecommerce",
@@ -64,9 +56,24 @@ export const menuItems = [
     label: "E-commerce",
     path: "/e-commerce",
     submenu: [
-      { id: "products", label: "Products" },
-      { id: "orders", label: "Orders" },
-      { id: "customers", label: "Customers" },
+      {
+        id: "products",
+        label: "Products",
+        path: "/e-commerce/products",
+        icon: Package,
+      },
+      {
+        id: "orders",
+        label: "Orders",
+        path: "/e-commerce/orders",
+        icon: ClipboardList,
+      },
+      {
+        id: "customers",
+        label: "Customers",
+        path: "/e-commerce/customers",
+        icon: Users,
+      },
     ],
   },
   /*
