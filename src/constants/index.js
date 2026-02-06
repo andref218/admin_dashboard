@@ -416,9 +416,9 @@ export const radarDataProducts = [
 
 export const scatterData = [
   { product: "Electronics", pageViews: 1500, orders: 120, color: "#3b82f6" },
-  { product: "Clothing", pageViews: 1200, orders: 80, color: "#f97316" },
+  { product: "Clothing", pageViews: 1200, orders: 80, color: "#8b5cf6" },
   { product: "Books", pageViews: 700, orders: 50, color: "#10b981" },
-  { product: "Home", pageViews: 1300, orders: 90, color: "#8b5cf6" },
+  { product: "Home", pageViews: 1300, orders: 90, color: "#f97316" },
   { product: "Sports", pageViews: 900, orders: 60, color: "#f43f5e" },
 ];
 

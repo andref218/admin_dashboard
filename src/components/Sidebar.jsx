@@ -4,7 +4,7 @@ import { menuItems } from "../constants";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Sidebar = ({ collapsed }) => {
+const Sidebar = ({ collapsed, toggleSidebar }) => {
   // State for tracking which submenu is currently open
   const [openSubmenu, setOpenSubmenu] = useState(null);
 
@@ -160,7 +160,12 @@ const Sidebar = ({ collapsed }) => {
               ) : (
                 <NavLink
                   key={item.id}
-                  onClick={closeFloatingSubmenu}
+                  onClick={(e) => {
+                    closeFloatingSubmenu();
+                    if (window.innerWidth < 768 && !collapsed) {
+                      toggleSidebar();
+                    }
+                  }}
                   to={item.path}
                   className={({ isActive }) =>
                     `w-full flex items-center p-3 rounded-xl transition-all duration-300 ease-in-out cursor-pointer ${
@@ -199,42 +204,58 @@ const Sidebar = ({ collapsed }) => {
                 </NavLink>
               )}
               {/* Sub Menus */}
-              {item.submenu && openSubmenu === item.id && (
+              {item.submenu && (
                 <>
+                  {/* Expanded Sidebar */}
                   {!collapsed && (
-                    <div className="ml-8 mt-1 space-y-1">
-                      {item.submenu.map((sub) => (
-                        <NavLink
-                          key={sub.id}
-                          to={sub.path}
-                          className={({ isActive }) =>
-                            `w-full flex items-center p-3 rounded-xl transition-all duration-300 ease-in-out ${
-                              isActive
-                                ? "bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15"
-                                : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50"
-                            } ${collapsed ? "justify-center w-10" : "justify-start"}`
-                          }
+                    <AnimatePresence>
+                      {openSubmenu === item.id && (
+                        <motion.div
+                          className="ml-8 mt-1 space-y-1 overflow-hidden"
+                          initial={{ height: 0 }}
+                          animate={{ height: "auto" }}
+                          exit={{ height: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
                         >
-                          <div className="flex items-center space-x-3 w-full">
-                            {sub.icon && (
-                              <sub.icon className="w-5 h-5 dark:text-white" />
-                            )}
-
-                            {!collapsed && (
-                              <span className=" font-medium dark:text-white text-xs ml-2">
-                                {sub.label}
-                              </span>
-                            )}
-                          </div>
-                        </NavLink>
-                      ))}
-                    </div>
+                          {item.submenu.map((sub) => (
+                            <NavLink
+                              key={sub.id}
+                              to={sub.path}
+                              onClick={() => {
+                                if (window.innerWidth < 768 && !collapsed) {
+                                  closeFloatingSubmenu();
+                                  toggleSidebar();
+                                }
+                              }}
+                              className={({ isActive }) =>
+                                `w-full flex items-center p-3 rounded-xl transition-all duration-300 ease-in-out ${
+                                  isActive
+                                    ? "bg-linear-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/15"
+                                    : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                                } ${collapsed ? "justify-center w-10" : "justify-start"}`
+                              }
+                            >
+                              <div className="flex items-center space-x-3 w-full">
+                                {sub.icon && (
+                                  <sub.icon className="w-5 h-5 dark:text-white" />
+                                )}
+                                {!collapsed && (
+                                  <span className="font-medium dark:text-white text-xs ml-2">
+                                    {sub.label}
+                                  </span>
+                                )}
+                              </div>
+                            </NavLink>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   )}
-                  {/* Collapsed */}
+
+                  {/* Collapsed Sidebar */}
                   <AnimatePresence>
-                    {item.submenu &&
+                    {collapsed &&
                       openSubmenu === item.id &&
-                      collapsed &&
                       showFloatingSubmenu &&
                       submenuPositions[item.id] && (
                         <motion.div
@@ -256,7 +277,7 @@ const Sidebar = ({ collapsed }) => {
                               onClick={() => {
                                 setTimeout(() => {
                                   closeFloatingSubmenu();
-                                }, 800);
+                                }, 1000);
                               }}
                               className={({ isActive }) =>
                                 `w-full flex items-center p-3 rounded-xl transition-all duration-300 ease-in-out ${
@@ -288,7 +309,7 @@ const Sidebar = ({ collapsed }) => {
         <div className="p-4 border-t border-slate-200/50 dark:border-slate-700/50">
           <div className="flex items-center space-x-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
             <img
-              src="./images/profile_pic_cartoon.png"
+              src="/images/profile_pic_cartoon.png"
               alt="user"
               className="w-10 h-10 rounded-full ring-2 ring-blue-500/40 hover:ring-blue-500/80 cursor-pointer duration-300"
             />

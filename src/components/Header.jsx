@@ -33,11 +33,11 @@ const Header = ({
   return (
     <div
       className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50
-    dark:border-slate-700/50 px-6 py-4"
+    dark:border-slate-700/50 px-4 md:px-6 py-3 md:py-4"
     >
-      <div className="relative flex items-center justify-between">
+      <div className="flex items-center justify-between">
         {/*Left Section */}
-        <div className="flex items-center space-x-4 shrink-0">
+        <div className="flex items-center space-x-2 md:space-x-4">
           <button
             className="p-2 rounded-lg text-slate-600 dark:text-slate-300 
           hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
@@ -45,31 +45,62 @@ const Header = ({
           >
             <Menu className="w-5 h-5" />
           </button>
-          <div className="hidden md:block">
+          {/* Title only on desktop large (lg+) */}
+          <div className="hidden lg:block">
             <h1 className="text-2xl font-black text-slate-800 dark:text-white">
               {title}
             </h1>
             <p className="dark:text-white text-sm">{subTitle}</p>
           </div>
         </div>
-        {/*Center */}
-        <div className="absolute left-1/2 -translate-x-1/2 w-full max-w-md px-6">
+
+        {/* Center Section */}
+        {/* Mobile */}
+        <div className="flex-1 mx-2 md:hidden">
           <div className="relative">
-            <Search
-              className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white
-            text-slate-400"
-            />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white text-slate-400" />
             <input
               type="text"
               value={searchItem}
               placeholder={placeholderSearch}
               className="w-full pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200
-               dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 
-               focus:outline-none focus:ring-2 focus:ring-blue-500/80 focus:border-transparent transition-all
-               "
+            dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 
+              focus:outline-none focus:ring-2 focus:ring-blue-500/80 focus:border-transparent transition-all"
               onChange={(e) => setSearchItem(e.target.value.trimStart())}
             />
-            {/*Keeping it here in case its needed in the future 
+          </div>
+        </div>
+
+        {/* Tablet */}
+        <div className="hidden md:flex lg:hidden flex-1 mx-2 relative">
+          <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white text-slate-400" />
+          <input
+            type="text"
+            value={searchItem}
+            placeholder={placeholderSearch}
+            className="w-full pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200
+          dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 
+            focus:outline-none focus:ring-2 focus:ring-blue-500/80 focus:border-transparent transition-all"
+            onChange={(e) => setSearchItem(e.target.value.trimStart())}
+          />
+        </div>
+
+        {/* Desktop */}
+        <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-full max-w-md px-6">
+          <div className="relative">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white text-slate-400" />
+            <input
+              type="text"
+              value={searchItem}
+              placeholder={placeholderSearch}
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200
+            dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 
+              focus:outline-none focus:ring-2 focus:ring-blue-500/80 focus:border-transparent transition-all"
+              onChange={(e) => setSearchItem(e.target.value.trimStart())}
+            />
+          </div>
+        </div>
+        {/*Keeping it here in case its needed in the future 
             <button
               className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 text-slate-400 
             hover:text-slate-600 dark:hover:text-slate-300"
@@ -77,10 +108,9 @@ const Header = ({
               <Filter />
             </button>
             */}
-          </div>
-        </div>
-        {/*Right */}
-        <div className="flex items-center space-x-3 shrink-0">
+
+        {/* Right Section */}
+        <div className="flex items-center space-x-2 md:space-x-3 ">
           {/*Quick action - Keeping it here in case its needed in the future
           <button
             className="hidden lg:flex items-center space-x-2 py-2 px-4 bg-linear-to-r
@@ -118,8 +148,8 @@ const Header = ({
           </button>
           {/*Settings */}
           <button
-            className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100
-          dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className=" p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100
+          dark:hover:bg-slate-800 transition-colors cursor-pointer hidden md:block"
           >
             <Settings className="w-5 h-5" />
           </button>
@@ -129,7 +159,7 @@ const Header = ({
           "
           >
             <img
-              src="./images/profile_pic_cartoon.png"
+              src="/images/profile_pic_cartoon.png"
               alt="User"
               className="w-8 h-8 rounded-full   hover:ring-blue-500/80 cursor-pointer duration-300"
             />

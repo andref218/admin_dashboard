@@ -6,7 +6,17 @@ import { appRoutes } from "./constants/routes";
 import AppLayout from "./Layout/AppLayout";
 
 function App() {
-  const [sideBarCollapsed, setSideBarCollapsed] = useState(false);
+  const [sideBarCollapsed, setSideBarCollapsed] = useState(
+    () => window.innerWidth < 768,
+  );
+  // State to track if the user manually toggled the sidebar
+  const [userToggledSidebar, setUserToggledSidebar] = useState(false);
+
+  // Function to toggle the sidebar manually
+  const toggleSidebar = () => {
+    setSideBarCollapsed((prev) => !prev);
+    setUserToggledSidebar(true);
+  };
 
   // Initialize darkMode state from localStorage, defaulting to false if not set
   const [darkMode, setDarkMode] = useState(() => {
@@ -24,6 +34,18 @@ function App() {
     localStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
+  // Effect to handle window resize and collapse sidebar automatically
+  useEffect(() => {
+    const handleResize = () => {
+      if (!userToggledSidebar) {
+        setSideBarCollapsed(window.innerWidth < 768);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [userToggledSidebar]);
+
   return (
     <Router>
       <Routes>
@@ -35,6 +57,7 @@ function App() {
               setDarkMode={setDarkMode}
               sideBarCollapsed={sideBarCollapsed}
               setSideBarCollapsed={setSideBarCollapsed}
+              toggleSidebar={toggleSidebar}
             />
           }
         >

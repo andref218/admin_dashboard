@@ -1,13 +1,13 @@
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Outlet, useLocation } from "react-router-dom";
-import { useDeferredValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const AppLayout = ({
   sideBarCollapsed,
-  setSideBarCollapsed,
   darkMode,
   setDarkMode,
+  toggleSidebar,
 }) => {
   const [searchItem, setSearchItem] = useState("");
   const location = useLocation();
@@ -22,12 +22,12 @@ const AppLayout = ({
     >
       <div className="flex h-screen overflow-hidden">
         {/* Sidebar */}
-        <Sidebar collapsed={sideBarCollapsed} />
+        <Sidebar collapsed={sideBarCollapsed} toggleSidebar={toggleSidebar} />
 
         {/* Header */}
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header
-            onToggleSideBar={() => setSideBarCollapsed(!sideBarCollapsed)}
+            onToggleSideBar={toggleSidebar}
             darkMode={darkMode}
             onToggleTheme={() => setDarkMode((prev) => !prev)}
             searchItem={searchItem}
