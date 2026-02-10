@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import DashBoard from "../pages/Dashboard.jsx/DashBoard";
 import Users from "../pages/Users/Users";
 import Analytics from "../pages/Analytics/Analytics";
+import ProductsTable from "../pages/Ecommerce/Products/ProductsTable";
 
 export const appRoutes = [
   { path: "/", element: <Navigate to="/dashboard" replace /> },
@@ -12,7 +13,7 @@ export const appRoutes = [
     path: "/e-commerce",
     element: <Navigate to="/e-commerce/products" replace />,
   },
-  { path: "/e-commerce/products" },
+  { path: "/e-commerce/products", element: <ProductsTable /> },
   { path: "/e-commerce/orders" },
   { path: "/e-commerce/customers" },
   { path: "/inventory" },
