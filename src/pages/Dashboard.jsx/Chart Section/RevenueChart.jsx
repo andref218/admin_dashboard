@@ -28,7 +28,7 @@ const RevenueChart = () => {
             Monthly revenue and expenses
           </p>
         </div>
-        <div className="flex items-center space-x-4 ">
+        <div className="flex flex-wrap items-center space-x-4 ">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-linear-to-r from-blue-500 to-purple-600 rounded-full"></div>
             <div className="text-sm text-slate-600 dark:text-slate-400">

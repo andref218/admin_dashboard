@@ -4,13 +4,13 @@ import { useOutletContext } from "react-router-dom";
 import { MoreVertical, Trash2 } from "lucide-react";
 import DropdownMenu from "./DropdownMenu";
 import { motion, AnimatePresence } from "framer-motion";
-import ConfirmDeleteModal from "./modals/ConfirmDeleteModal";
-import EditUserModal from "./modals/EditUserModal";
-import ViewUserModal from "./modals/ViewUserModal";
-import { useSelectionDrag } from "./hooks/useSelectionDrag";
-import { useSort } from "./hooks/useSort";
-import { useDropdownMenu } from "./hooks/useDropdownMenu";
-import { useUserSelection } from "./hooks/useUserSelection";
+import ConfirmDeleteModal from "../../modals/ConfirmDeleteModal";
+import EditItemModal from "../../modals/EditItemModal";
+import ViewItemModal from "../../modals/ViewItemModal";
+import { useSelectionDrag } from "../../hooks/useSelectionDrag";
+import { useSort } from "../../hooks/useSort";
+import { useDropdownMenu } from "../../hooks/useDropDownMenu";
+import { useSelection } from "../../hooks/useSelection";
 
 const statusStyles = {
   Active: "bg-emerald-100 text-emerald-600",
@@ -38,11 +38,11 @@ const UsersTable = () => {
   const tableContainerRef = useRef(null);
 
   const {
-    selectedUsersIds,
+    selectedIds: selectedUsersIds,
     toggleSelection,
-    setSelectedUsersIds,
+    setSelectedIds: setSelectedUsersIds,
     clearSelection,
-  } = useUserSelection(selectionMode);
+  } = useSelection(selectionMode);
 
   const {
     isDragging,
@@ -51,10 +51,22 @@ const UsersTable = () => {
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
-  } = useSelectionDrag(tableContainerRef, selectionMode, setSelectedUsersIds);
+  } = useSelectionDrag(
+    tableContainerRef,
+    selectionMode,
+    setSelectedUsersIds,
+    "tbody tr", // selector for the rows that should be selectable (default: "tbody tr")
+    "id", // attribute on the row that contains the unique ID (default: "data-id")
+  );
 
-  const { handleSort, SortIcon, sortedUsers } = useSort(usersData, searchItem);
-  const filteredUsers = sortedUsers;
+  const { handleSort, SortIcon, sortedData } = useSort(usersData, searchItem, [
+    "name",
+    "email",
+    "role",
+    "status",
+  ]);
+
+  const filteredUsers = sortedData;
 
   const { openMenuId, menuPosition, toggleMenu, closeMenu } = useDropdownMenu();
 
@@ -279,7 +291,7 @@ const UsersTable = () => {
                   filteredUsers.map((user) => (
                     <motion.tr
                       key={user.id}
-                      data-userid={user.id}
+                      data-id={user.id}
                       //layout - (keeping in case its needed in the future)
                       initial={{ opacity: 0, y: -10 }} // starting state
                       animate={{
@@ -415,20 +427,46 @@ const UsersTable = () => {
           </table>
         </div>
       </div>
-      <ViewUserModal user={userToView} onClose={() => setUserToView(null)} />
-      <EditUserModal
-        user={userToEdit}
+      <ViewItemModal
+        item={userToView}
+        fields={[
+          { name: "name", label: "Name" },
+          { name: "email", label: "Email" },
+          { name: "role", label: "Role" },
+          { name: "status", label: "Status" },
+          { name: "lastActive", label: "Last Active" },
+        ]}
+        onClose={() => setUserToView(null)}
+      />
+      <EditItemModal
+        item={userToEdit}
+        fields={[
+          { name: "name", label: "Name", type: "text" },
+          { name: "email", label: "Email", type: "email" },
+          {
+            name: "role",
+            label: "Role",
+            type: "select",
+            options: ["Admin", "User", "Moderator"],
+          },
+          {
+            name: "status",
+            label: "Status",
+            type: "select",
+            options: ["Active", "Suspended", "Pending"],
+          },
+        ]}
         onSave={handleSaveUser}
         onCancel={() => setUserToEdit(null)}
       />
       <ConfirmDeleteModal
-        user={userToDelete}
+        item={userToDelete}
         onConfirm={confirmDeleteUser}
         onCancel={() => setUserToDelete(null)}
       />
       {usersToDelete.length > 0 && (
         <ConfirmDeleteModal
-          users={usersData.filter((u) => usersToDelete.includes(u.id))}
+          items={usersData.filter((u) => usersToDelete.includes(u.id))}
           onConfirm={() => {
             setUsersData((prev) =>
               prev.filter((u) => !usersToDelete.includes(u.id)),

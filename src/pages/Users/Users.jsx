@@ -1,4 +1,3 @@
-import React from "react";
 import UserStatsGrid from "./UserStatsGrid";
 import { userStats } from "../../constants/users";
 import UsersTable from "./UsersTable";
