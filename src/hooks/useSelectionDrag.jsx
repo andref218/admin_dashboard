@@ -1,14 +1,21 @@
 import { useState } from "react";
 
 /**
- * Hook to handle drag selection on a table
- * Allows selecting multiple rows by dragging a rectangle
+ * Generic hook for drag selection in a table
+ * Works with any type of row, as long as you pass the selector and data attribute
+ *
+ * @param {object} tableContainerRef - ref to the table container element
+ * @param {boolean} selectionMode - whether selection mode is active
+ * @param {function} setSelectedIds - function to update selected IDs (Set)
+ * @param {string} rowSelector - CSS selector for table rows (default: "tbody tr")
+ * @param {string} dataAttribute - data attribute containing row ID (default: "id")
  */
-
 export const useSelectionDrag = (
   tableContainerRef,
   selectionMode,
-  setSelectedUsersIds,
+  setSelectedIds,
+  rowSelector = "tbody tr",
+  dataAttribute = "id",
 ) => {
   // State to track if the user is currently dragging
   const [isDragging, setIsDragging] = useState(false);
@@ -19,20 +26,18 @@ export const useSelectionDrag = (
   // Current point of the drag
   const [dragCurrent, setDragCurrent] = useState({ x: 0, y: 0 });
 
-  //Handles mouse down event
-  //Starts the drag selection
+  // Handles mouse down event
+  // Starts the drag selection
   const handleMouseDown = (e) => {
     if (!selectionMode) return; // do nothing if selection mode is off
     if (e.button !== 0) return; // only respond to left mouse button
     if (!tableContainerRef.current) return;
 
     const rect = tableContainerRef.current.getBoundingClientRect();
-
-    setIsDragging(true);
-
-    // Account for scroll position
     const scrollTop = tableContainerRef.current.scrollTop;
     const scrollLeft = tableContainerRef.current.scrollLeft;
+
+    setIsDragging(true);
 
     // Set the starting drag position
     setDragStart({
@@ -47,14 +52,12 @@ export const useSelectionDrag = (
     });
   };
 
-  //Handles mouse move event
-  //Updates the selection rectangle and selected rows
+  // Handles mouse move event
+  // Updates the selection rectangle and selected rows
   const handleMouseMove = (e) => {
     if (!isDragging || !tableContainerRef.current) return;
 
     const rect = tableContainerRef.current.getBoundingClientRect();
-
-    // Current mouse position relative to table container
     const current = {
       x: e.clientX - rect.left + tableContainerRef.current.scrollLeft,
       y: e.clientY - rect.top + tableContainerRef.current.scrollTop,
@@ -71,7 +74,7 @@ export const useSelectionDrag = (
     };
 
     // Loop through all table rows and check if they intersect with selection rectangle
-    document.querySelectorAll("tbody tr[data-userid]").forEach((row) => {
+    document.querySelectorAll(rowSelector).forEach((row) => {
       const rowRect = row.getBoundingClientRect();
       const containerRect = tableContainerRef.current.getBoundingClientRect();
 
@@ -100,19 +103,20 @@ export const useSelectionDrag = (
         relativeRect.top < selectionRect.bottom &&
         relativeRect.bottom > selectionRect.top;
 
-      // If it intersects, add the row's user ID to selected IDs
+      // If it intersects, add the row's ID to selected IDs
       if (intersects) {
-        setSelectedUsersIds((prev) => {
+        const id = row.dataset[dataAttribute];
+        setSelectedIds((prev) => {
           const newSet = new Set(prev);
-          newSet.add(row.dataset.userid);
+          newSet.add(id);
           return newSet;
         });
       }
     });
   };
 
-  //Handles mouse up event
-  //Stops the drag selection
+  // Handles mouse up event
+  // Stops the drag selection
   const handleMouseUp = () => {
     setIsDragging(false);
   };
