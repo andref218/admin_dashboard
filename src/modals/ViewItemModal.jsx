@@ -1,12 +1,20 @@
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ViewUserModal = ({ user, onClose }) => {
-  if (!user) return null;
+/**
+ * Generic view modal for users, products, or any entity.
+ *
+ * Props:
+ * - item: object to view
+ * - fields: array of field configs: { name, label }
+ * - onClose: function()
+ */
+const ViewItemModal = ({ item, fields = [], onClose }) => {
+  if (!item) return null;
 
   return createPortal(
     <AnimatePresence>
-      {user && (
+      {item && (
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center"
           initial={{ opacity: 0 }}
@@ -32,25 +40,15 @@ const ViewUserModal = ({ user, onClose }) => {
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
             <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">
-              User Details
+              {item.name || item.title || "Item Details"}
             </h3>
 
             <div className="flex flex-col gap-3 text-slate-700 dark:text-slate-300">
-              <div>
-                <strong>Name:</strong> {user.name}
-              </div>
-              <div>
-                <strong>Email:</strong> {user.email}
-              </div>
-              <div>
-                <strong>Role:</strong> {user.role}
-              </div>
-              <div>
-                <strong>Status:</strong> {user.status}
-              </div>
-              <div>
-                <strong>Last Active:</strong> {user.lastActive}
-              </div>
+              {fields.map((field) => (
+                <div key={field.name}>
+                  <strong>{field.label}:</strong> {item[field.name] ?? "-"}
+                </div>
+              ))}
             </div>
 
             <div className="mt-6 flex justify-end">
@@ -70,4 +68,4 @@ const ViewUserModal = ({ user, onClose }) => {
   );
 };
 
-export default ViewUserModal;
+export default ViewItemModal;

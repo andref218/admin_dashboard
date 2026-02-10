@@ -1,12 +1,28 @@
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ConfirmDeleteModal = ({ user, users, onConfirm, onCancel }) => {
-  if (!user && (!users || users.length === 0)) return null;
+/**
+ * ConfirmDeleteModal
+ * Generic confirmation modal for deleting a single item or multiple items.
+ *
+ * Props:
+ * - item: single item to delete
+ * - items: array of items to delete
+ * - onConfirm: function to call when confirmed
+ * - onCancel: function to call when canceled
+ */
+const ConfirmDeleteModal = ({ item, items, onConfirm, onCancel }) => {
+  // If there's nothing to delete, don't render
+  if (!item && (!items || items.length === 0)) return null;
+
+  // Determine how many items are being deleted
+  const isMultiple = items && items.length > 0;
+  const count = isMultiple ? items.length : 1;
+  const itemName = isMultiple ? "items" : item.name || item.title || "item"; // fallback to generic "item" if no name/title
 
   return createPortal(
     <AnimatePresence>
-      {(user || (users && users.length > 0)) && (
+      {(item || isMultiple) && (
         <motion.div
           className="fixed inset-0 z-50 flex items-center justify-center"
           initial={{ opacity: 0 }}
@@ -33,13 +49,13 @@ const ConfirmDeleteModal = ({ user, users, onConfirm, onCancel }) => {
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
             <h3 className="text-lg font-bold text-slate-800 dark:text-white">
-              Delete {users ? "users" : "user"}
+              Delete {isMultiple ? `${count} ${itemName}` : itemName}
             </h3>
 
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-              Are you sure you want to delete this{" "}
-              <span className=" font-extrabold">
-                {users ? `${users.length} users` : user.name}
+              Are you sure you want to delete{" "}
+              <span className="font-extrabold">
+                {isMultiple ? `${count} ${itemName}` : itemName}
               </span>
               ?
             </p>
