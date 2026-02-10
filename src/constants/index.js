@@ -17,11 +17,11 @@ import {
   Package,
   ClipboardList,
 } from "lucide-react";
-import RevenueChart from "../pages/Dashboard.jsx/Chart Section/RevenueChart";
-import SalesChart from "../pages/Dashboard.jsx/Chart Section/SalesChart";
-import OrdersTable from "../pages/Dashboard.jsx/Table Section/OrdersTable";
-import ProductsTable from "../pages/Dashboard.jsx/Table Section/ProductsTable";
-import ActivityFeed from "../pages/Dashboard.jsx/ActivityFeed";
+import RevenueChart from "../pages/Dashboard/Chart Section/RevenueChart";
+import SalesChart from "../pages/Dashboard/Chart Section/SalesChart";
+import OrdersTable from "../pages/Dashboard/Table Section/OrdersTable";
+import ProductsTable from "../pages/Dashboard/Table Section/ProductsTable";
+import ActivityFeed from "../pages/Dashboard/ActivityFeed";
 import RevenueVSTargetChart from "../pages/Analytics/ChartSection/RevenueVSTargetChart";
 import TopCountriesChart from "../pages/Analytics/ChartSection/TopCountriesChart";
 import UserActivityAreaChart from "../pages/Analytics/ChartSection/UserActivityAreaChart";
