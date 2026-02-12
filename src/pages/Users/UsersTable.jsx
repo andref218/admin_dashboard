@@ -355,13 +355,15 @@ const UsersTable = () => {
                             className="w-6 h-6 rounded-full"
                           />
                           {/* Name */}
-                          <div className="ml-2">{user.name}</div>
+                          <div className="ml-2 max-w-40">
+                            <span className="block truncate">{user.name}</span>
+                          </div>
                         </div>
                       </td>
 
                       {/* Email */}
-                      <td className="px-6 py-4 text-sm  text-slate-600 dark:text-slate-400">
-                        {user.email}
+                      <td className="px-6 py-4 text-sm  text-slate-600 dark:text-slate-400 max-w-40">
+                        <span className="block truncate">{user.email}</span>
                       </td>
 
                       {/* Role */}

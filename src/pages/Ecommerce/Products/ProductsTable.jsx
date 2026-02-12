@@ -236,7 +236,7 @@ const ProductsTable = () => {
                   onClick={() => handleSort("price")}
                   className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer text-right"
                 >
-                  <div className="flex items-center justify-end">
+                  <div className="flex items-center ">
                     Price
                     <SortIcon column="price" />
                   </div>
@@ -246,7 +246,7 @@ const ProductsTable = () => {
                   onClick={() => handleSort("stock")}
                   className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer text-right"
                 >
-                  <div className="flex items-center justify-end">
+                  <div className="flex items-center ">
                     Stock
                     <SortIcon column="stock" />
                   </div>
@@ -352,23 +352,32 @@ const ProductsTable = () => {
                             className="w-6 h-6 rounded-full"
                           />
                           {/* Name */}
-                          <div className="ml-2">{product.name}</div>
+                          <div className="ml-2 max-w-40">
+                            {" "}
+                            <span className="block truncate">
+                              {product.name}
+                            </span>
+                          </div>
                         </div>
                       </td>
 
                       {/* Category */}
-                      <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
-                        {product.category}
+                      <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400 max-w-40">
+                        <span className="block truncate">
+                          {product.category}
+                        </span>
                       </td>
 
                       {/* Price */}
-                      <td className="px-6 py-4 text-sm text-right font-medium text-slate-700 dark:text-slate-300">
-                        ${product.price.toLocaleString()}
+                      <td className="px-6 py-4 text-sm font-medium text-slate-700 dark:text-slate-300 max-w-10">
+                        <span className="block truncate">
+                          ${product.price.toLocaleString()}
+                        </span>
                       </td>
 
                       {/* Stock */}
-                      <td className="px-6 py-4 text-sm text-right text-slate-600 dark:text-slate-400">
-                        {product.stock}
+                      <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400 max-w-10">
+                        <span className="block truncate">{product.stock}</span>
                       </td>
 
                       {/* Status */}
@@ -433,7 +442,7 @@ const ProductsTable = () => {
         fields={[
           { name: "name", label: "Product Name" },
           { name: "category", label: "Category" },
-          { name: "price", label: "Price" },
+          { name: "price", label: "Price ($)" },
           { name: "stock", label: "Stock" },
           { name: "status", label: "Status" },
           { name: "createdAt", label: "Created At" },
@@ -445,7 +454,7 @@ const ProductsTable = () => {
         fields={[
           { name: "name", label: "Product Name", type: "text" },
           { name: "category", label: "Category", type: "text" },
-          { name: "price", label: "Price", type: "number" },
+          { name: "price", label: "Price ($)", type: "number" },
           { name: "stock", label: "Stock", type: "number" },
           {
             name: "status",

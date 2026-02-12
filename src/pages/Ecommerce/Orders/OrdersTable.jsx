@@ -56,7 +56,7 @@ const OrdersTable = () => {
     "customer",
     "email",
   ]);
-  const filteedOrders = sortedData;
+  const filteredOrders = sortedData;
 
   const { openMenuId, menuPosition, toggleMenu, closeMenu } = useDropdownMenu();
 
@@ -298,8 +298,8 @@ const OrdersTable = () => {
 
             <tbody>
               <AnimatePresence>
-                {filteedOrders.length > 0 ? (
-                  filteedOrders.map((order) => (
+                {filteredOrders.length > 0 ? (
+                  filteredOrders.map((order) => (
                     <motion.tr
                       key={order.id}
                       data-id={order.id}
@@ -360,35 +360,39 @@ const OrdersTable = () => {
                             </motion.button>
                           )}
 
-                          <div className="ml-2 text-sm font-medium text-blue-600">
-                            #{order.id}
+                          <div className="ml-2 text-sm font-medium text-blue-600 max-w-xs">
+                            <span className="block truncate">#{order.id}</span>
                           </div>
                         </div>
                       </td>
 
                       {/* Customer */}
-                      <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
-                        {order.customer}
+                      <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400 max-w-35">
+                        <span className="block truncate">{order.customer}</span>
                       </td>
 
                       {/* Email */}
-                      <td className="px-6 py-4 text-sm font-medium text-slate-700 dark:text-slate-300">
-                        {order.email}
+                      <td className="px-6 py-4 text-sm font-medium text-slate-700 dark:text-slate-300 max-w-40">
+                        <span className="block truncate">{order.email}</span>
                       </td>
 
                       {/* Items */}
-                      <td className="px-6 py-4 text-sm  text-slate-600 dark:text-slate-400">
-                        {order.items}
+                      <td className="px-6 py-4 text-sm  text-slate-600 dark:text-slate-400 max-w-30">
+                        <span className="block truncate">{order.items}</span>
                       </td>
 
                       {/* Total */}
-                      <td className="px-6 py-4 text-sm font-medium text-slate-700 dark:text-slate-300">
-                        ${order.total.toLocaleString()}
+                      <td className="px-6 py-4 text-sm font-medium text-slate-700 dark:text-slate-300 max-w-30">
+                        <span className="block truncate">
+                          ${order.total.toLocaleString()}
+                        </span>
                       </td>
 
                       {/* Payment */}
-                      <td className="px-6 py-4 text-sm  text-slate-600 dark:text-slate-400">
-                        {order.paymentMethod}
+                      <td className="px-6 py-4 text-sm  text-slate-600 dark:text-slate-400 max-w-xs">
+                        <span className="block truncate">
+                          {order.paymentMethod}
+                        </span>
                       </td>
                       {/* Status */}
                       <td className="px-6 py-4">
