@@ -4,6 +4,7 @@ import Users from "../pages/Users/Users";
 import Analytics from "../pages/Analytics/Analytics";
 import ProductsTable from "../pages/Ecommerce/Products/ProductsTable";
 import OrdersTable from "../pages/Ecommerce/Orders/OrdersTable";
+import CustomersTable from "../pages/Ecommerce/Customers/CustomersTable";
 
 export const appRoutes = [
   { path: "/", element: <Navigate to="/dashboard" replace /> },
@@ -16,7 +17,7 @@ export const appRoutes = [
   },
   { path: "/e-commerce/products", element: <ProductsTable /> },
   { path: "/e-commerce/orders", element: <OrdersTable /> },
-  { path: "/e-commerce/customers" },
+  { path: "/e-commerce/customers", element: <CustomersTable /> },
   { path: "/inventory" },
   { path: "/transactions" },
   { path: "/messages" },

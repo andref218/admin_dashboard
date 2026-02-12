@@ -40,6 +40,9 @@ const ConfirmDeleteModal = ({
     } else if (itemType === "Product") {
       itemLabel = "Product";
       itemDisplayName = item.name || item.id;
+    } else if (itemType === "Customer") {
+      itemLabel = "Customer";
+      itemDisplayName = item.name || item.id;
     } else {
       itemLabel = itemType;
       itemDisplayName = item.id || "item";
