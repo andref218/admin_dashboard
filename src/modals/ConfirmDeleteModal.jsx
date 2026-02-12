@@ -71,18 +71,24 @@ const ConfirmDeleteModal = ({
           {/* Modal */}
           <motion.div
             className="relative z-10 bg-white dark:bg-slate-900 rounded-xl p-6
-            w-full max-w-md shadow-xl"
+            w-full max-w-md shadow-xl max-h-[90vh] overflow-hidden overflow-y-auto"
             initial={{ scale: 0.95, opacity: 0, y: 10 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 10 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
-            <h3 className="text-lg font-bold text-slate-800 dark:text-white">
+            <h3
+              className="text-lg font-bold text-slate-800 dark:text-white
+            wrap-break-word whitespace-pre-wrap"
+            >
               Delete{" "}
               {isMultiple ? itemLabel : `${itemLabel} ${itemDisplayName}`}
             </h3>
 
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+            <p
+              className="mt-2 text-sm text-slate-600 dark:text-slate-400
+            wrap-break-word whitespace-pre-wrap"
+            >
               Are you sure you want to delete{" "}
               <span className="font-extrabold">
                 {isMultiple ? itemLabel : itemDisplayName}

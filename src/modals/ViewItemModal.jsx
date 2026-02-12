@@ -33,20 +33,31 @@ const ViewItemModal = ({ item, fields = [], onClose }) => {
 
           {/* Modal */}
           <motion.div
-            className="relative z-10 bg-white dark:bg-slate-900 rounded-xl p-6 w-full max-w-md shadow-xl"
+            className="relative z-10 bg-white dark:bg-slate-900 rounded-xl p-6 w-full 
+            max-w-md shadow-xl max-h-[90vh] overflow-hidden overflow-y-auto"
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: 50 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
-            <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">
+            <h3
+              className="text-lg font-bold text-slate-800 dark:text-white mb-4 wrap-break-word 
+            whitespace-pre-wrap"
+            >
               {item.name || item.title || "Item Details"}
             </h3>
 
-            <div className="flex flex-col gap-3 text-slate-700 dark:text-slate-300">
+            <div
+              className="flex flex-col gap-3 text-slate-700 dark:text-slate-300
+          "
+            >
               {fields.map((field) => (
                 <div key={field.name}>
-                  <strong>{field.label}:</strong> {item[field.name] ?? "-"}
+                  <strong>{field.label}:</strong>
+                  <span className="text-sm wrap-break-word whitespace-pre-wrap">
+                    {" "}
+                    {item[field.name] ?? "-"}
+                  </span>
                 </div>
               ))}
             </div>

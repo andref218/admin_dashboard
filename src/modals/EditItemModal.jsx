@@ -56,13 +56,17 @@ const EditItemModal = ({ item, fields = [], onSave, onCancel }) => {
 
           {/* Modal */}
           <motion.div
-            className="relative z-10 bg-white dark:bg-slate-900 rounded-xl p-6 w-full max-w-md shadow-xl"
+            className="relative z-10 bg-white dark:bg-slate-900 rounded-xl p-6 w-full max-w-md shadow-xl
+            max-h-[90vh] overflow-hidden overflow-y-auto"
             initial={{ scale: 0.8, opacity: 0, y: 50 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: 50 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
           >
-            <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4">
+            <h3
+              className="text-lg font-bold text-slate-800 dark:text-white mb-4 wrap-break-word 
+            whitespace-pre-wrap"
+            >
               Edit {item.name || item.title || "Item"}
             </h3>
 
