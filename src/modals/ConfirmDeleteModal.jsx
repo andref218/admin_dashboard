@@ -11,14 +11,40 @@ import { motion, AnimatePresence } from "framer-motion";
  * - onConfirm: function to call when confirmed
  * - onCancel: function to call when canceled
  */
-const ConfirmDeleteModal = ({ item, items, onConfirm, onCancel }) => {
+const ConfirmDeleteModal = ({
+  item,
+  items,
+  itemType = "Item",
+  onConfirm,
+  onCancel,
+}) => {
   // If there's nothing to delete, don't render
   if (!item && (!items || items.length === 0)) return null;
 
   // Determine how many items are being deleted
   const isMultiple = items && items.length > 0;
   const count = isMultiple ? items.length : 1;
-  const itemName = isMultiple ? "items" : item.name || item.title || "item"; // fallback to generic "item" if no name/title
+
+  let itemLabel;
+  let itemDisplayName;
+
+  if (isMultiple) {
+    itemLabel = `${count} ${itemType}s`;
+  } else {
+    if (itemType === "Order") {
+      itemLabel = "Order";
+      itemDisplayName = `#${item.id}`;
+    } else if (itemType === "User") {
+      itemLabel = "User";
+      itemDisplayName = item.name || item.id;
+    } else if (itemType === "Product") {
+      itemLabel = "Product";
+      itemDisplayName = item.name || item.id;
+    } else {
+      itemLabel = itemType;
+      itemDisplayName = item.id || "item";
+    }
+  }
 
   return createPortal(
     <AnimatePresence>
@@ -49,13 +75,14 @@ const ConfirmDeleteModal = ({ item, items, onConfirm, onCancel }) => {
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
             <h3 className="text-lg font-bold text-slate-800 dark:text-white">
-              Delete {isMultiple ? `${count} ${itemName}` : itemName}
+              Delete{" "}
+              {isMultiple ? itemLabel : `${itemLabel} ${itemDisplayName}`}
             </h3>
 
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
               Are you sure you want to delete{" "}
               <span className="font-extrabold">
-                {isMultiple ? `${count} ${itemName}` : itemName}
+                {isMultiple ? itemLabel : itemDisplayName}
               </span>
               ?
             </p>

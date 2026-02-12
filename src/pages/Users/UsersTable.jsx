@@ -307,7 +307,7 @@ const UsersTable = () => {
                       className="relative border-b border-slate-200/50 dark:border-slate-700/50
                   hover:bg-slate-100 dark:hover:bg-slate-800/50 transition"
                     >
-                      {/* User */}
+                      {/* User Details */}
                       <td className="px-6 py-4 text-sm font-medium text-slate-800 dark:text-white">
                         <div className="flex items-center">
                           {selectionMode && (
@@ -348,12 +348,13 @@ const UsersTable = () => {
                               </AnimatePresence>
                             </motion.button>
                           )}
-
+                          {/* Image */}
                           <img
                             src={user.avatar}
                             alt={user.name}
                             className="w-6 h-6 rounded-full"
                           />
+                          {/* Name */}
                           <div className="ml-2">{user.name}</div>
                         </div>
                       </td>
@@ -461,12 +462,14 @@ const UsersTable = () => {
       />
       <ConfirmDeleteModal
         item={userToDelete}
+        itemType="User"
         onConfirm={confirmDeleteUser}
         onCancel={() => setUserToDelete(null)}
       />
       {usersToDelete.length > 0 && (
         <ConfirmDeleteModal
           items={usersData.filter((u) => usersToDelete.includes(u.id))}
+          itemType="User"
           onConfirm={() => {
             setUsersData((prev) =>
               prev.filter((u) => !usersToDelete.includes(u.id)),

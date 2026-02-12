@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { products } from "../../../constants/products";
+import { orders } from "../../../constants/orders";
 import { useOutletContext } from "react-router-dom";
 import { MoreVertical, Trash2 } from "lucide-react";
 import DropdownMenu from "./DropdownMenu";
@@ -12,27 +12,27 @@ import { useSort } from "../../../hooks/useSort";
 import { useDropdownMenu } from "../../../hooks/useDropDownMenu";
 import { useSelection } from "../../../hooks/useSelection";
 
-const ProductsTable = () => {
+const OrdersTable = () => {
   const searchItem = useOutletContext();
-  const [productsData, setProductsData] = useState(products);
+  const [ordersData, setOrdersData] = useState(orders);
 
-  const [productToView, setProductToView] = useState(null);
+  const [orderToView, setOrderToView] = useState(null);
 
-  const [productToEdit, setProductToEdit] = useState(null);
+  const [orderToEdit, setOrderToEdit] = useState(null);
   const [recentlyEditedId, setRecentlyEditedId] = useState(null);
 
-  const [productToDelete, setProductToDelete] = useState(null);
+  const [orderToDelete, setOrderToDelete] = useState(null);
 
   const [selectionMode, setSelectionMode] = useState(false);
 
-  const [productsToDelete, setProductsToDelete] = useState([]);
+  const [ordersToDelete, setOrdersToDelete] = useState([]);
 
   const tableContainerRef = useRef(null);
 
   const {
-    selectedIds: selectedProductIds,
+    selectedIds: selectedOrderIds,
     toggleSelection,
-    setSelectedIds: setSelectedProductIds,
+    setSelectedIds: setSelectedOrderIds,
     clearSelection,
   } = useSelection(selectionMode);
 
@@ -46,36 +46,36 @@ const ProductsTable = () => {
   } = useSelectionDrag(
     tableContainerRef,
     selectionMode,
-    setSelectedProductIds,
+    setSelectedOrderIds,
     "tbody tr", // selector for the rows that should be selectable (default: "tbody tr")
     "id", // attribute on the row that contains the unique ID (default: "data-id")
   );
 
-  const { handleSort, SortIcon, sortedData } = useSort(
-    productsData,
-    searchItem,
-    ["name", "category", "status"],
-  );
-  const filteredProducts = sortedData;
+  const { handleSort, SortIcon, sortedData } = useSort(ordersData, searchItem, [
+    "id",
+    "customer",
+    "email",
+  ]);
+  const filteedOrders = sortedData;
 
   const { openMenuId, menuPosition, toggleMenu, closeMenu } = useDropdownMenu();
 
-  const handleSaveProduct = (updatedProduct) => {
-    setProductsData((prev) =>
-      prev.map((u) => (u.id === updatedProduct.id ? updatedProduct : u)),
+  const handleSaveOrder = (updatedOrder) => {
+    setOrdersData((prev) =>
+      prev.map((u) => (u.id === updatedOrder.id ? updatedOrder : u)),
     );
-    setRecentlyEditedId(updatedProduct.id);
+    setRecentlyEditedId(updatedOrder.id);
 
     setTimeout(() => setRecentlyEditedId(null), 800);
-    setProductToEdit(null);
+    setOrderToEdit(null);
   };
 
-  const confirmDeleteProduct = () => {
-    setProductsData((prev) =>
-      prev.filter((product) => product.id !== productToDelete.id),
+  const confirmDeleteOrder = () => {
+    setOrdersData((prev) =>
+      prev.filter((order) => order.id !== orderToDelete.id),
     );
 
-    setProductToDelete(null);
+    setOrderToDelete(null);
     closeMenu();
   };
 
@@ -91,14 +91,14 @@ const ProductsTable = () => {
       >
         <div>
           <h3 className="text-lg font-bold text-slate-800 dark:text-white">
-            Products
+            Orders
           </h3>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            View and manage all products
+            View and track all orders
           </p>
         </div>
         <div className="flex items-center">
-          {selectionMode && selectedProductIds.size > 0 && (
+          {selectionMode && selectedOrderIds.size > 0 && (
             <button
               onClick={clearSelection}
               className="flex items-center gap-2 text-sm cursor-pointer px-4 py-2 rounded-lg border border-slate-300 
@@ -124,12 +124,12 @@ const ProductsTable = () => {
                 return;
               }
 
-              if (selectedProductIds.size === 0) {
+              if (selectedOrderIds.size === 0) {
                 setSelectionMode(false);
                 return;
               }
 
-              setProductsToDelete([...selectedProductIds]);
+              setOrdersToDelete([...selectedOrderIds]);
             }}
             className="flex items-center gap-2 text-sm cursor-pointer px-4 py-2 rounded-lg border border-slate-300 
           dark:border-slate-700 dark:text-slate-300 hover:bg-slate-100 sm:mr-4 dark:hover:bg-slate-800 
@@ -148,7 +148,7 @@ const ProductsTable = () => {
                 </motion.span>
               )}
 
-              {selectionMode && selectedProductIds.size === 0 && (
+              {selectionMode && selectedOrderIds.size === 0 && (
                 <motion.span
                   key="cancel"
                   initial={{ opacity: 0, y: 6 }}
@@ -160,7 +160,7 @@ const ProductsTable = () => {
                 </motion.span>
               )}
 
-              {selectionMode && selectedProductIds.size > 0 && (
+              {selectionMode && selectedOrderIds.size > 0 && (
                 <motion.span
                   key="delete"
                   initial={{ opacity: 0, y: 6 }}
@@ -172,7 +172,7 @@ const ProductsTable = () => {
                   <Trash2 className="w-4 h-4" />
                   Delete
                   <span className="text-red-500 font-semibold">
-                    ({selectedProductIds.size})
+                    ({selectedOrderIds.size})
                   </span>
                 </motion.span>
               )}
@@ -213,45 +213,64 @@ const ProductsTable = () => {
             <thead className="bg-slate-100 dark:bg-slate-800">
               <tr>
                 <th
-                  onClick={() => handleSort("name")}
+                  onClick={() => handleSort("id")}
                   className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
                 >
                   <div className="flex items-center">
-                    Product
-                    <SortIcon column="name" />
+                    Order ID
+                    <SortIcon column="id" />
                   </div>
                 </th>
 
                 <th
-                  onClick={() => handleSort("category")}
+                  onClick={() => handleSort("customer")}
                   className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
                 >
                   <div className="flex items-center">
-                    Category
-                    <SortIcon column="category" />
+                    Customer
+                    <SortIcon column="customer" />
                   </div>
                 </th>
 
                 <th
-                  onClick={() => handleSort("price")}
+                  onClick={() => handleSort("email")}
                   className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer text-right"
                 >
-                  <div className="flex items-center justify-end">
-                    Price
-                    <SortIcon column="price" />
+                  <div className="flex items-center ">
+                    Email
+                    <SortIcon column="email" />
                   </div>
                 </th>
 
                 <th
-                  onClick={() => handleSort("stock")}
+                  onClick={() => handleSort("items")}
                   className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer text-right"
                 >
-                  <div className="flex items-center justify-end">
-                    Stock
-                    <SortIcon column="stock" />
+                  <div className="flex items-center ">
+                    Items
+                    <SortIcon column="items" />
                   </div>
                 </th>
 
+                <th
+                  onClick={() => handleSort("total")}
+                  className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
+                >
+                  <div className="flex items-center">
+                    Total
+                    <SortIcon column="total" />
+                  </div>
+                </th>
+
+                <th
+                  onClick={() => handleSort("paymentMethod")}
+                  className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
+                >
+                  <div className="flex items-center">
+                    Payment
+                    <SortIcon column="paymentMethod" />
+                  </div>
+                </th>
                 <th
                   onClick={() => handleSort("status")}
                   className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
@@ -261,13 +280,12 @@ const ProductsTable = () => {
                     <SortIcon column="status" />
                   </div>
                 </th>
-
                 <th
                   onClick={() => handleSort("createdAt")}
                   className="p-4 px-6 text-sm font-semibold dark:text-slate-400 cursor-pointer"
                 >
                   <div className="flex items-center">
-                    Created
+                    Date
                     <SortIcon column="createdAt" />
                   </div>
                 </th>
@@ -280,18 +298,18 @@ const ProductsTable = () => {
 
             <tbody>
               <AnimatePresence>
-                {filteredProducts.length > 0 ? (
-                  filteredProducts.map((product) => (
+                {filteedOrders.length > 0 ? (
+                  filteedOrders.map((order) => (
                     <motion.tr
-                      key={product.id}
-                      data-id={product.id}
+                      key={order.id}
+                      data-id={order.id}
                       //layout - (keeping in case its needed in the future)
                       initial={{ opacity: 0, y: -10 }} // starting state
                       animate={{
                         opacity: 1,
                         y: 0,
                         backgroundColor:
-                          recentlyEditedId === product.id
+                          recentlyEditedId === order.id
                             ? "rgba(16, 185, 129, 0.2)"
                             : "transparent",
                       }}
@@ -300,7 +318,7 @@ const ProductsTable = () => {
                       className="relative border-b border-slate-200/50 dark:border-slate-700/50
                   hover:bg-slate-100 dark:hover:bg-slate-800/50 transition"
                     >
-                      {/* Product Details */}
+                      {/* Order */}
                       <td className="px-6 py-4 text-sm font-medium text-slate-800 dark:text-white">
                         <div className="flex items-center">
                           {selectionMode && (
@@ -311,27 +329,23 @@ const ProductsTable = () => {
                               }}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                toggleSelection(product.id);
+                                toggleSelection(order.id);
                               }}
                               whileTap={{ scale: 0.9 }}
                               animate={{
-                                backgroundColor: selectedProductIds.has(
-                                  product.id,
-                                )
+                                backgroundColor: selectedOrderIds.has(order.id)
                                   ? "#ef4444"
                                   : "transparent",
-                                borderColor: selectedProductIds.has(product.id)
+                                borderColor: selectedOrderIds.has(order.id)
                                   ? "#ef4444"
                                   : "#94a3b8",
-                                scale: selectedProductIds.has(product.id)
-                                  ? 1.1
-                                  : 1,
+                                scale: selectedOrderIds.has(order.id) ? 1.1 : 1,
                               }}
                               transition={{ duration: 0.15, ease: "easeOut" }}
                               className="w-5 h-5 mr-4 flex items-center justify-center rounded border cursor-pointer"
                             >
                               <AnimatePresence>
-                                {selectedProductIds.has(product.id) && (
+                                {selectedOrderIds.has(order.id) && (
                                   <motion.span
                                     key="x"
                                     initial={{ opacity: 0, scale: 0.5 }}
@@ -345,70 +359,81 @@ const ProductsTable = () => {
                               </AnimatePresence>
                             </motion.button>
                           )}
-                          {/* Image */}
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-6 h-6 rounded-full"
-                          />
-                          {/* Name */}
-                          <div className="ml-2">{product.name}</div>
+
+                          <div className="ml-2 text-sm font-medium text-blue-600">
+                            #{order.id}
+                          </div>
                         </div>
                       </td>
 
-                      {/* Category */}
+                      {/* Customer */}
                       <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
-                        {product.category}
+                        {order.customer}
                       </td>
 
-                      {/* Price */}
-                      <td className="px-6 py-4 text-sm text-right font-medium text-slate-700 dark:text-slate-300">
-                        ${product.price.toLocaleString()}
+                      {/* Email */}
+                      <td className="px-6 py-4 text-sm font-medium text-slate-700 dark:text-slate-300">
+                        {order.email}
                       </td>
 
-                      {/* Stock */}
-                      <td className="px-6 py-4 text-sm text-right text-slate-600 dark:text-slate-400">
-                        {product.stock}
+                      {/* Items */}
+                      <td className="px-6 py-4 text-sm  text-slate-600 dark:text-slate-400">
+                        {order.items}
                       </td>
 
+                      {/* Total */}
+                      <td className="px-6 py-4 text-sm font-medium text-slate-700 dark:text-slate-300">
+                        ${order.total.toLocaleString()}
+                      </td>
+
+                      {/* Payment */}
+                      <td className="px-6 py-4 text-sm  text-slate-600 dark:text-slate-400">
+                        {order.paymentMethod}
+                      </td>
                       {/* Status */}
                       <td className="px-6 py-4">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            product.status === "Active"
+                            order.status === "Delivered"
                               ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-400"
-                              : product.status === "Out of Stock"
+                              : order.status === "Cancelled"
                                 ? "bg-red-100 text-red-700 dark:bg-red-500/20 dark:text-red-400"
-                                : "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-400"
+                                : order.status === "Shipped"
+                                  ? "bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-400"
+                                  : order.status === "Processing"
+                                    ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-400"
+                                    : order.status === "Paid"
+                                      ? "bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400"
+                                      : "bg-yellow-100 text-yellow-700 dark:bg-yellow-500/20 dark:text-yellow-400"
                           }`}
                         >
-                          {product.status}
+                          {order.status}
                         </span>
                       </td>
 
                       {/* Created At */}
                       <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-400">
-                        {product.createdAt}
+                        {order.createdAt}
                       </td>
 
                       {/* Actions */}
                       <td className="px-6 py-4">
                         <button
-                          id={`menu-btn-${product.id}`}
-                          onClick={() => toggleMenu(product.id)}
+                          id={`menu-btn-${order.id}`}
+                          onClick={() => toggleMenu(order.id)}
                           className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700/50 cursor-pointer"
                         >
                           <MoreVertical className="w-4 h-4 dark:text-white" />
                         </button>
 
-                        {openMenuId === product.id && menuPosition && (
+                        {openMenuId === order.id && menuPosition && (
                           <DropdownMenu
-                            product={product}
+                            order={order}
                             position={menuPosition}
                             onClose={closeMenu}
-                            onView={() => setProductToView(product)}
-                            onEdit={() => setProductToEdit(product)}
-                            onDelete={() => setProductToDelete(product)}
+                            onView={() => setOrderToView(order)}
+                            onEdit={() => setOrderToEdit(order)}
+                            onDelete={() => setOrderToDelete(order)}
                           />
                         )}
                       </td>
@@ -416,9 +441,9 @@ const ProductsTable = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={7}>
+                    <td colSpan={9}>
                       <div className="w-full flex items-center justify-center py-10 text-slate-500 dark:text-slate-200">
-                        No products found.
+                        No orders found.
                       </div>
                     </td>
                   </tr>
@@ -429,57 +454,72 @@ const ProductsTable = () => {
         </div>
       </div>
       <ViewItemModal
-        item={productToView}
+        item={orderToView}
         fields={[
-          { name: "name", label: "Product Name" },
-          { name: "category", label: "Category" },
-          { name: "price", label: "Price" },
-          { name: "stock", label: "Stock" },
+          { name: "id", label: "Order ID" },
+          { name: "customer", label: "Customer" },
+          { name: "email", label: "Email" },
+          { name: "items", label: "Items" },
+          { name: "total", label: "Total ($)" },
+          { name: "paymentMethod", label: "Payment Method" },
           { name: "status", label: "Status" },
           { name: "createdAt", label: "Created At" },
         ]}
-        onClose={() => setProductToView(null)}
+        onClose={() => setOrderToView(null)}
       />
       <EditItemModal
-        item={productToEdit}
+        item={orderToEdit}
         fields={[
-          { name: "name", label: "Product Name", type: "text" },
-          { name: "category", label: "Category", type: "text" },
-          { name: "price", label: "Price", type: "number" },
-          { name: "stock", label: "Stock", type: "number" },
+          { name: "customer", label: "Customer", type: "text" },
+          { name: "email", label: "Email", type: "email" },
+          { name: "items", label: "Items", type: "number" },
+          { name: "total", label: "Total ($)", type: "number" },
+          {
+            name: "paymentMethod",
+            label: "Payment Method",
+            type: "select",
+            options: ["Credit Card", "PayPal", "Apple Pay", "Google Pay"],
+          },
           {
             name: "status",
             label: "Status",
             type: "select",
-            options: ["Active", "Out of Stock", "Pending"],
+            options: [
+              "Pending",
+              "Paid",
+              "Processing",
+              "Shipped",
+              "Delivered",
+              "Cancelled",
+            ],
           },
         ]}
-        onSave={handleSaveProduct}
-        onCancel={() => setProductToEdit(null)}
+        onSave={handleSaveOrder}
+        onCancel={() => setOrderToEdit(null)}
       />
       <ConfirmDeleteModal
-        item={productToDelete}
-        itemType="Product"
-        onConfirm={confirmDeleteProduct}
-        onCancel={() => setProductToDelete(null)}
+        item={orderToDelete}
+        itemType="Order"
+        onConfirm={confirmDeleteOrder}
+        onCancel={() => setOrderToDelete(null)}
       />
-      {productsToDelete.length > 0 && (
+      {ordersToDelete.length > 0 && (
         <ConfirmDeleteModal
-          items={productsData.filter((p) => productsToDelete.includes(p.id))}
-          itemType="Product"
+          items={ordersData.filter((p) => ordersToDelete.includes(p.id))}
+          itemType="Order"
           onConfirm={() => {
-            setProductsData((prev) =>
-              prev.filter((p) => !productsToDelete.includes(p.id)),
+            setOrdersData((prev) =>
+              prev.filter((p) => !ordersToDelete.includes(p.id)),
             );
-            setProductsToDelete([]);
+            setOrdersToDelete([]);
             setSelectionMode(false);
-            setSelectedProductIds(new Set());
+            setSelectedOrderIds(new Set());
           }}
-          onCancel={() => setProductsToDelete([])}
+          onCancel={() => setOrdersToDelete([])}
         />
       )}
     </div>
   );
 };
 
-export default ProductsTable;
+export default OrdersTable;
