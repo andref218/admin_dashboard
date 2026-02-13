@@ -2,11 +2,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ================= LIGHT MODE ================= */
+/* ================= BASE / SCROLLBAR ================= */
 
 body {
   @apply text-black;
-  scrollbar-width: thin; /* Firefox */
+  scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 }
 
@@ -29,9 +29,12 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
-/* ================= DARK MODE ================= */
+/* ================= DARK MODE SCROLLBAR ================= */
 
-/* Tailwind adds class 'dark' to html, so target html.dark */
+html.dark body {
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
 html.dark body::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.3);
 }
@@ -40,7 +43,169 @@ html.dark body::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.6);
 }
 
-/* Firefox dark mode */
-html.dark body {
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+/* ================= FULLCALENDAR – GLOBAL ================= */
+
+.fc {
+  font-family: inherit;
+}
+
+/* Reduce default grid contrast */
+html.dark .fc {
+  --fc-border-color: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+
+/* ================= HEADER VIEW SWITCH (Month / Week / Day) */
+
+/* Active view button – DARK MODE */
+html.dark .fc .fc-button.fc-button-active {
+  background-color: rgba(56, 189, 248, 0.25); /* sky-400 */
+  color: white !important;
+  box-shadow: none !important; /* remove glow/hover shadow */
+  transform: none !important; /* remove any scale */
+  transition: none !important; /* remove smooth zoom/scale effect */
+}
+
+/* Hover (inactive) buttons – DARK MODE */
+html.dark .fc .fc-button:not(.fc-button-active):hover {
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Active view button */
+html:not(.dark) .fc .fc-button.fc-button-active {
+  background-color: rgba(56, 189, 248, 0.2); /* soft sky blue, subtle */
+  color: #0369a1 !important; /* slightly darker blue for readable text */
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+/* Hover (inactive) buttons – LIGHT MODE */
+html:not(.dark) .fc .fc-button:not(.fc-button-active):hover {
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ================= HEADER / TOOLBAR */
+
+.fc .fc-toolbar-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+html.dark .fc .fc-toolbar-title {
+  color: white !important;
+}
+
+.fc .fc-toolbar button {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+}
+
+html.dark .fc .fc-button {
+  color: white !important;
+  background-color: #1e293b; /* slate-800 */
+  border: none;
+}
+
+html.dark .fc .fc-button:hover {
+  background-color: #334155; /* slate-700 */
+}
+
+/* ================= WEEKDAY HEADERS  */
+
+.fc .fc-col-header-cell-cushion {
+  font-size: 0.875rem;
+}
+
+html.dark .fc .fc-col-header-cell-cushion {
+  color: white !important;
+}
+
+/* ================= MONTH VIEW (DAY GRID)  */
+
+html.dark .fc .fc-daygrid-day-number {
+  color: #e5e7eb; /* gray-200 */
+}
+
+html.dark .fc .fc-daygrid-day.fc-day-today {
+  background-color: rgba(56, 189, 248, 0.12); /* sky-400 */
+}
+
+html .fc .fc-daygrid-day.fc-day-today {
+  background-color: rgba(125, 211, 252, 0.35); /* sky-300 */
+}
+
+/* ================= WEEK / DAY VIEW (TIME GRID)*/
+
+/* Highlight whole "today" column */
+html.dark .fc .fc-timegrid-col.fc-day-today {
+  background-color: rgba(56, 189, 248, 0.12);
+}
+html .fc .fc-timegrid-col.fc-day-today {
+  background-color: rgba(56, 189, 248, 0.2);
+}
+
+/* Hour labels (left axis) */
+html.dark .fc .fc-timegrid-axis {
+  color: #e5e7eb; /* slate-200 */
+}
+
+/* Time labels (08:00, 09:00, etc.) */
+html.dark .fc .fc-timegrid-slot-label,
+html.dark .fc .fc-timegrid-axis {
+  color: #e5e7eb;
+}
+
+/* Horizontal slot lines */
+html.dark .fc .fc-timegrid-slot {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Vertical day separators */
+html.dark .fc .fc-timegrid-col {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Current time indicator */
+html.dark .fc .fc-now-indicator-line {
+  border-color: #38bdf8;
+}
+
+/* ================= EVENTS */
+
+/* Remove FullCalendar default white box */
+.fc .fc-event {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Event text */
+.fc .fc-event-title {
+  font-size: 0.875rem;
+}
+
+/* Keep events clickable */
+.fc .fc-event-main {
+  padding: 0;
+}
+
+.fc .fc-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Globally style all events */
+.fc .fc-event {
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* shadow-md */
+  transition: background-color 0.2s ease; /* subtle hover transition */
+}
+
+/* Optional: hover effect */
+.fc .fc-event:hover {
+  filter: brightness(1.05);
 }

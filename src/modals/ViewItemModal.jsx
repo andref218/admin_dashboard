@@ -51,15 +51,41 @@ const ViewItemModal = ({ item, fields = [], onClose }) => {
               className="flex flex-col gap-3 text-slate-700 dark:text-slate-300
           "
             >
-              {fields.map((field) => (
-                <div key={field.name}>
-                  <strong>{field.label}:</strong>
-                  <span className="text-sm wrap-break-word whitespace-pre-wrap">
-                    {" "}
-                    {item[field.name] ?? "-"}
-                  </span>
-                </div>
-              ))}
+              {/* Dynamically renders each field value.
+               // Dates and times are formatted for display (date, start, end),
+               // while other fields are read directly from the item.
+               // A fallback "-" is used to avoid showing undefined values in the UI */}
+              {fields.map((field) => {
+                let displayValue = "-";
+
+                if (field.name === "date" && item.start instanceof Date) {
+                  displayValue = item.start.toLocaleDateString();
+                } else if (
+                  field.name === "start" &&
+                  item.start instanceof Date
+                ) {
+                  displayValue = item.start.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
+                } else if (field.name === "end" && item.end instanceof Date) {
+                  displayValue = item.end.toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
+                } else {
+                  displayValue = item[field.name] ?? "-";
+                }
+
+                return (
+                  <div key={field.name}>
+                    <strong>{field.label}:</strong>{" "}
+                    <span className="text-sm whitespace-pre-wrap">
+                      {displayValue}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="mt-6 flex justify-end">

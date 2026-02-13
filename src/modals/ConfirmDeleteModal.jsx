@@ -43,6 +43,9 @@ const ConfirmDeleteModal = ({
     } else if (itemType === "Customer") {
       itemLabel = "Customer";
       itemDisplayName = item.name || item.id;
+    } else if (itemType === "Event") {
+      itemLabel = "Event";
+      itemDisplayName = item.title;
     } else {
       itemLabel = itemType;
       itemDisplayName = item.id || "item";
@@ -82,7 +85,7 @@ const ConfirmDeleteModal = ({
             wrap-break-word whitespace-pre-wrap"
             >
               Delete{" "}
-              {isMultiple ? itemLabel : `${itemLabel} ${itemDisplayName}`}
+              {isMultiple ? itemLabel : `${itemLabel} "${itemDisplayName}"`}
             </h3>
 
             <p

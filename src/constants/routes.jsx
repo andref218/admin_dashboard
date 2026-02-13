@@ -5,6 +5,7 @@ import Analytics from "../pages/Analytics/Analytics";
 import ProductsTable from "../pages/Ecommerce/Products/ProductsTable";
 import OrdersTable from "../pages/Ecommerce/Orders/OrdersTable";
 import CustomersTable from "../pages/Ecommerce/Customers/CustomersTable";
+import DashboardCalendar from "../pages/Calendar/Calendar";
 
 export const appRoutes = [
   { path: "/", element: <Navigate to="/dashboard" replace /> },
@@ -21,7 +22,7 @@ export const appRoutes = [
   { path: "/inventory" },
   { path: "/transactions" },
   { path: "/messages" },
-  { path: "/calendar" },
+  { path: "/calendar", element: <DashboardCalendar /> },
   { path: "/reports" },
   { path: "/settings" },
 ];

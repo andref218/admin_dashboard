@@ -67,7 +67,9 @@ const EditItemModal = ({ item, fields = [], onSave, onCancel }) => {
               className="text-lg font-bold text-slate-800 dark:text-white mb-4 wrap-break-word 
             whitespace-pre-wrap"
             >
-              Edit {item.name || item.title || "Item"}
+              {item?.isNew
+                ? "Create Event"
+                : `Edit ${item?.name || item?.title || "Item"}`}
             </h3>
 
             <div className="flex flex-col gap-3">
