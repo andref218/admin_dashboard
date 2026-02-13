@@ -8,8 +8,10 @@ import ConfirmDeleteModal from "../../modals/ConfirmDeleteModal";
 import DropdownMenu from "./DropdownMenu";
 import ViewItemModal from "../../modals/ViewItemModal";
 import EditItemModal from "../../modals/EditItemModal";
+import { useOutletContext } from "react-router-dom";
 
 const DashboardCalendar = () => {
+  const searchItem = useOutletContext();
   const [events, setEvents] = useState(
     //Dates are converted to Date objects to ensure FullCalendar compatibility
     initialEvents.map((e) => ({
@@ -163,63 +165,80 @@ const DashboardCalendar = () => {
       <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">
         Manage and track all your scheduled events
       </p>
-      <FullCalendar
-        eventDidMount={(info) => {
-          info.el.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-            handleEventRightClick(info.event, e);
-          });
-        }}
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
-        }}
-        //Keeps React state in sync when an event is dragged.
-        //* Without this, changes would be lost when editing.
-        eventDrop={(info) => {
-          setEvents((prev) =>
-            prev.map((e) =>
-              e.id === info.event.id
-                ? {
-                    ...e,
-                    start: info.event.start,
-                    end: info.event.end,
-                  }
-                : e,
-            ),
-          );
-        }}
-        events={events}
-        editable={true}
-        selectable={true}
-        height="700px"
-        dayCellClassNames={() =>
-          darkMode ? ["text-white"] : ["text-gray-700"]
-        }
-        eventContent={(arg) => (
-          <div
-            className="px-2 py-1 rounded-lg text-xs md:text-sm shadow-sm cursor-pointer"
-            style={{
-              backgroundColor: arg.event.backgroundColor || arg.event.color,
-              color: "white",
-            }}
-          >
-            {arg.event.title}
+      <div className="relative ">
+        <FullCalendar
+          eventDidMount={(info) => {
+            info.el.addEventListener("contextmenu", (e) => {
+              e.preventDefault();
+              handleEventRightClick(info.event, e);
+            });
+          }}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay",
+          }}
+          //Keeps React state in sync when an event is dragged.
+          //* Without this, changes would be lost when editing.
+          eventDrop={(info) => {
+            setEvents((prev) =>
+              prev.map((e) =>
+                e.id === info.event.id
+                  ? {
+                      ...e,
+                      start: info.event.start,
+                      end: info.event.end,
+                    }
+                  : e,
+              ),
+            );
+          }}
+          events={events.filter((event) =>
+            event.title.toLowerCase().includes(searchItem.trim().toLowerCase()),
+          )}
+          editable={true}
+          selectable={true}
+          height="700px"
+          dayCellClassNames={() =>
+            darkMode ? ["text-white"] : ["text-gray-700"]
+          }
+          eventContent={(arg) => (
+            <div
+              className="px-2 py-1 rounded-lg text-xs md:text-sm shadow-sm cursor-pointer"
+              style={{
+                backgroundColor: arg.event.backgroundColor || arg.event.color,
+                color: "white",
+              }}
+            >
+              {arg.event.title}
+            </div>
+          )}
+          eventBackgroundColor={(arg) =>
+            arg.event.backgroundColor || arg.event.color
+          }
+          eventBorderColor={(arg) =>
+            arg.event.backgroundColor || arg.event.color
+          }
+          dayHeaderClassNames={() =>
+            darkMode
+              ? ["text-white font-medium"]
+              : ["text-gray-700 font-medium"]
+          }
+          dateClick={handleDayClick}
+          eventClick={handleEventClick}
+        />
+        {events.filter(
+          (event) =>
+            !searchItem ||
+            event.title.toLowerCase().includes(searchItem.trim().toLowerCase()),
+        ).length === 0 && (
+          <div className="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500 text-lg pointer-events-none">
+            No events found
           </div>
         )}
-        eventBackgroundColor={(arg) =>
-          arg.event.backgroundColor || arg.event.color
-        }
-        eventBorderColor={(arg) => arg.event.backgroundColor || arg.event.color}
-        dayHeaderClassNames={() =>
-          darkMode ? ["text-white font-medium"] : ["text-gray-700 font-medium"]
-        }
-        dateClick={handleDayClick}
-        eventClick={handleEventClick}
-      />
+      </div>
       <DropdownMenu
         item={selectedEvent}
         ref={dropdownRef}
