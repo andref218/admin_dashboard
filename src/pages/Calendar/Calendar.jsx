@@ -263,10 +263,13 @@ const DashboardCalendar = () => {
           }
           eventContent={(arg) => (
             <div
-              className="px-2 py-1 rounded-lg text-xs md:text-sm shadow-sm cursor-pointer"
+              className="px-2 py-1 rounded-lg text-xs md:text-sm shadow-sm cursor-pointer truncate"
               style={{
                 backgroundColor: arg.event.backgroundColor || arg.event.color,
                 color: "white",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
               {arg.event.title}
