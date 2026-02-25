@@ -1,6 +1,4 @@
-import React from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
-import { userStats } from "../../constants/users";
 
 const UserStatsGrid = ({ stats }) => {
   return (

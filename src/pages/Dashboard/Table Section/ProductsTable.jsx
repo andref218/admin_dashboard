@@ -1,4 +1,3 @@
-import React from "react";
 import { topProducts } from "../../../constants";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";

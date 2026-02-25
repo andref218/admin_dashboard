@@ -1,4 +1,3 @@
-import React from "react";
 import { orders } from "../../../constants/orders";
 import { MoreHorizontal } from "lucide-react";
 import { Link } from "react-router-dom";

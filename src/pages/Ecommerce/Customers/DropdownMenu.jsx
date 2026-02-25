@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Eye, Pencil, Trash2, Mail } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 
 const DropdownMenu = ({
   customer,

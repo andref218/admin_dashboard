@@ -77,6 +77,7 @@ export const menuItems = [
     ],
   },
   /*
+  //Left here for future implementation
   {
     id: "inventory",
     icon: Package,
@@ -103,6 +104,7 @@ export const menuItems = [
     label: "Calendar",
     path: "/calendar",
   },
+  //Left here for future implementation
   /*{
     id: "reports",
     icon: FileText,

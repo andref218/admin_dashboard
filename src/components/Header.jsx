@@ -1,14 +1,4 @@
-import {
-  Bell,
-  ChevronDown,
-  Filter,
-  Menu,
-  Moon,
-  Plus,
-  Search,
-  Settings,
-  Sun,
-} from "lucide-react";
+import { Menu, Moon, Search, Sun } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import {
   pageSubtitles,

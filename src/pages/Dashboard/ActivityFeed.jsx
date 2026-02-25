@@ -1,6 +1,4 @@
 import { Clock } from "lucide-react";
-import React from "react";
-import { activities } from "../../constants";
 
 const ActivityFeed = ({ activities }) => {
   return (
