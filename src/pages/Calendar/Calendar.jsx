@@ -12,6 +12,9 @@ import { useOutletContext } from "react-router-dom";
 
 const DashboardCalendar = () => {
   const searchItem = useOutletContext();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const [currentView, setCurrentView] = useState("dayGridMonth");
+  const calendarRef = useRef(null);
   const [events, setEvents] = useState(
     //Dates are converted to Date objects to ensure FullCalendar compatibility
     initialEvents.map((e) => ({
@@ -41,6 +44,20 @@ const DashboardCalendar = () => {
   const [darkMode, setDarkMode] = useState(
     document.documentElement.classList.contains("dark"),
   );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // Closes the dropdown menu when clicking outside of it.
   useEffect(() => {
@@ -158,15 +175,47 @@ const DashboardCalendar = () => {
   };
 
   return (
-    <div className="bg-white/90 dark:bg-slate-900/90 rounded-2xl shadow-xl p-6 transition-all duration-300">
+    <div
+      className="bg-white/90 dark:bg-slate-900/90 rounded-2xl shadow-xl p-6 
+    transition-all duration-300 w-full min-w-0 overflow-x-auto"
+    >
       <h3 className="text-2xl font-bold text-slate-800 dark:text-white mb-1">
         Dashboard Calendar
       </h3>
       <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">
         Manage and track all your scheduled events
       </p>
+      {isMobile && (
+        <div className="flex justify-center gap-2 mb-3">
+          {["dayGridMonth", "timeGridWeek", "timeGridDay"].map((view) => {
+            const isActive = currentView === view;
+            return (
+              <button
+                key={view}
+                onClick={() => {
+                  calendarRef.current.getApi().changeView(view);
+                  setCurrentView(view);
+                }}
+                className={`px-3 py-1 text-sm rounded-md transition-colors
+            ${
+              isActive
+                ? "bg-sky-400/25 text-sky-800 dark:bg-sky-400/25 dark:text-white"
+                : "bg-slate-200 text-gray-700 dark:bg-slate-700 dark:text-gray-200 hover:bg-slate-300 dark:hover:bg-slate-600"
+            }`}
+              >
+                {view === "dayGridMonth"
+                  ? "Month"
+                  : view === "timeGridWeek"
+                    ? "Week"
+                    : "Day"}
+              </button>
+            );
+          })}
+        </div>
+      )}
       <div className="relative ">
         <FullCalendar
+          ref={calendarRef}
           eventDidMount={(info) => {
             info.el.addEventListener("contextmenu", (e) => {
               e.preventDefault();
@@ -174,12 +223,20 @@ const DashboardCalendar = () => {
             });
           }}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          headerToolbar={{
-            left: "prev,next today",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
-          }}
+          initialView={currentView}
+          headerToolbar={
+            isMobile
+              ? {
+                  left: "prev,next",
+                  center: "title",
+                  right: "",
+                }
+              : {
+                  left: "prev,next today",
+                  center: "title",
+                  right: "dayGridMonth,timeGridWeek,timeGridDay",
+                }
+          }
           //Keeps React state in sync when an event is dragged.
           //* Without this, changes would be lost when editing.
           eventDrop={(info) => {
@@ -343,9 +400,7 @@ const DashboardCalendar = () => {
         itemType="Event"
         onCancel={() => setDeleteItem(null)}
         onConfirm={() => {
-          setEvents((prev) =>
-            prev.filter((e) => e.id !== Number(deleteItem.id)),
-          );
+          setEvents((prev) => prev.filter((e) => e.id !== deleteItem.id));
           setDeleteItem(null);
         }}
       />
