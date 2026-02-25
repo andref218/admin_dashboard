@@ -12,7 +12,7 @@ const UserStatsGrid = ({ stats }) => {
             key={stat.id}
             className="bg-white dark:bg-slate-900 rounded-xl p-5
             border border-slate-200/60 dark:border-slate-700/60
-            transition hover:shadow-md text-center"
+            transition hover:shadow-md text-center truncate"
           >
             {/*Icon*/}
             <div className={`inline-flex p-3 rounded-lg mb-4 ${stat.bgColor}`}>

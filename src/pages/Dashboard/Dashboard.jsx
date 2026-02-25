@@ -19,7 +19,7 @@ const DashBoard = () => {
   //If there's no value in input field, shows everything
   if (!searchItem) {
     return (
-      <div id="dashboard" className="space-y-6">
+      <div id="dashboard" className="space-y-6 w-full min-w-0 overflow-x-auto">
         <StatsGrid stats={stats} />
         <ChartSection charts={dashboardCharts} />
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">

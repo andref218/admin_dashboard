@@ -15,7 +15,7 @@ const ProductsRadarChart = () => {
   return (
     <div
       className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl
-      border border-slate-200/50 dark:border-slate-700/50 p-6 flex flex-col h-169"
+      border border-slate-200/50 dark:border-slate-700/50 p-6 flex flex-col h-169 truncate"
     >
       <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">
         Product Performance

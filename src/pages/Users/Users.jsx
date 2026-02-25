@@ -6,7 +6,7 @@ const Users = () => {
   return (
     <div
       id="users"
-      className="w-full max-w-screen-2xl mx-auto flex flex-col space-y-6"
+      className="w-full max-w-screen-2xl mx-auto flex flex-col space-y-6 min-w-0 overflow-x-auto"
     >
       <UserStatsGrid stats={userStats} />
       <UsersTable />

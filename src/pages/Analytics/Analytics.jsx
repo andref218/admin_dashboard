@@ -14,7 +14,7 @@ const Analytics = () => {
 
   if (!searchItem) {
     return (
-      <div id="analytics" className="space-y-6">
+      <div id="analytics" className="space-y-6 w-full min-w-0 overflow-x-auto ">
         <AnalyticsGrid stats={analyticsStats} />
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           <RevenueVSTargetChart />
