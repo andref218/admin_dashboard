@@ -19,7 +19,7 @@ const RevenueChart = () => {
       className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl
     border border-slate-200/50 dark:border-slate-700/50 p-6 truncate"
     >
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
         <div>
           <h3 className="text-xl font-bold text-slate-800 dark:text-white">
             Revenue Chart
@@ -28,22 +28,24 @@ const RevenueChart = () => {
             Monthly revenue and expenses
           </p>
         </div>
-        <div className="flex flex-wrap items-center space-x-4 ">
+
+        {/* Legend */}
+        <div className="flex space-x-4 mt-4 md:mt-0">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-linear-to-r from-blue-500 to-purple-600 rounded-full"></div>
-            <div className="text-sm text-slate-600 dark:text-slate-400">
-              <span>Revenue</span>
-            </div>
+            <span className="text-sm text-slate-600 dark:text-slate-400">
+              Revenue
+            </span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-linear-to-r from-slate-400 to-slate-500 rounded-full"></div>
-            <div className="text-sm text-slate-600 dark:text-slate-400">
-              <span>Expenses</span>
-            </div>
+            <span className="text-sm text-slate-600 dark:text-slate-400">
+              Expenses
+            </span>
           </div>
         </div>
       </div>
-      <div className=" h-80">
+      <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={revenueDataChart}

@@ -1,4 +1,3 @@
-import React from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { salesDataChart } from "../../../constants";
 
@@ -6,9 +5,9 @@ const SalesChart = () => {
   return (
     <div
       className=" bg-white dark:bg-slate-900 backdrop-blur-xl rounded-2xl p-6
-    border border-slate-200/50 dark:border-slate-700/50 truncate"
+    border border-slate-200/50 dark:border-slate-700/50 truncate h-full flex flex-col"
     >
-      <div className="mb-6 ">
+      <div>
         <h3 className="text-lg font-bold text-slate-800 dark:text-white">
           Sales by Category
         </h3>
@@ -16,7 +15,7 @@ const SalesChart = () => {
           Production distribution
         </p>
       </div>
-      <div className="h-48">
+      <div className="h-60">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -44,7 +43,7 @@ const SalesChart = () => {
           </PieChart>
         </ResponsiveContainer>
       </div>
-      <div className="space-y-3">
+      <div className="space-y-3 mt-auto">
         {salesDataChart.map((item, index) => {
           return (
             <div className="flex items-center justify-between" key={index}>
