@@ -1,4 +1,4 @@
-import { ChevronDown, Zap } from "lucide-react";
+import { ChevronDown, Activity } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { menuItems } from "../constants";
 import { Link, NavLink } from "react-router-dom";
@@ -91,7 +91,7 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
             className="w-10 h-10 bg-linear-to-r from-blue-600 to-purple-600 rounded-xl
       flex items-center justify-center shadow-lg shrink-0"
           >
-            <Zap className="w-6 h-6 text-white" />
+            <Activity className="w-6 h-6 text-white" />
           </div>
 
           <div
