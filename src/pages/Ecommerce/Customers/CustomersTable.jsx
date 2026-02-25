@@ -312,7 +312,6 @@ const CustomersTable = () => {
                     <motion.tr
                       key={customer.id}
                       data-id={customer.id}
-                      //layout - (keeping in case its needed in the future)
                       initial={{ opacity: 0, y: -10 }} // starting state
                       animate={{
                         opacity: 1,

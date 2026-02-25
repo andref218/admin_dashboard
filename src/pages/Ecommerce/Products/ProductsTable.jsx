@@ -285,7 +285,6 @@ const ProductsTable = () => {
                     <motion.tr
                       key={product.id}
                       data-id={product.id}
-                      //layout - (keeping in case its needed in the future)
                       initial={{ opacity: 0, y: -10 }} // starting state
                       animate={{
                         opacity: 1,

@@ -304,7 +304,6 @@ const OrdersTable = () => {
                     <motion.tr
                       key={order.id}
                       data-id={order.id}
-                      //layout - (keeping in case its needed in the future)
                       initial={{ opacity: 0, y: -10 }} // starting state
                       animate={{
                         opacity: 1,

@@ -18,9 +18,12 @@ const ActivityFeed = ({ activities }) => {
               Recent system activities
             </p>
           </div>
+          {/* View all button for Activity Feed
+          //Keeping it here in case it's needed in the future
           <button className="text-blue-600 hover:text-blue-700 text-sm font-medium cursor-pointer">
             View all
           </button>
+          */}
         </div>
       </div>
       <div className="p-6">

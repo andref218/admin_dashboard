@@ -292,7 +292,6 @@ const UsersTable = () => {
                     <motion.tr
                       key={user.id}
                       data-id={user.id}
-                      //layout - (keeping in case its needed in the future)
                       initial={{ opacity: 0, y: -10 }} // starting state
                       animate={{
                         opacity: 1,
