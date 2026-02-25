@@ -55,6 +55,7 @@ const OrdersTable = () => {
     "id",
     "customer",
     "email",
+    "paymentMethod",
   ]);
   const filteredOrders = sortedData;
 

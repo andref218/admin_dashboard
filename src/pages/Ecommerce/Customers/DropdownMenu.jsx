@@ -28,7 +28,7 @@ const DropdownMenu = ({
           width: "10rem",
           zIndex: 50,
         }}
-        className="bg-white dark:bg-slate-800 bcustomer bcustomer-slate-200 dark:bcustomer-slate-700 
+        className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 
         rounded-lg shadow-lg"
       >
         <button

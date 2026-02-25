@@ -400,7 +400,7 @@ const CustomersTable = () => {
                       </td>
 
                       {/* Email */}
-                      <td className="px-6 py-4 text-sm font-medium text-slate-700 dark:text-slate-300 max-w-xs">
+                      <td className="px-6 py-4 text-sm font-medium text-slate-700 dark:text-slate-300 max-w-35">
                         <span className="block truncate">{customer.email}</span>
                       </td>
 

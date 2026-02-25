@@ -81,7 +81,7 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
         collapsed ? "w-23" : "w-72"
       } transition-all duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80
       backdrop-blur-xl border-r border-slate-200/50 dark:border-slate-700/50 flex flex-col
-      relative z-10  `}
+      relative z-10`}
     >
       {/*Logo*/}
       <Link to="/dashboard">

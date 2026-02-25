@@ -28,7 +28,7 @@ export const customers = [
   {
     id: "C003",
     name: "Will Carey",
-    email: "carla.mendes@example.com",
+    email: "will.carey@example.com",
     phone: "+351 912 345 678",
     totalOrders: 20,
     totalSpent: 3200.0,

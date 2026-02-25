@@ -1,6 +1,7 @@
 import React from "react";
 import { topProducts } from "../../../constants";
 import { TrendingDown, TrendingUp } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ProductsTable = () => {
   return (
@@ -18,9 +19,12 @@ const ProductsTable = () => {
               Best performing products
             </p>
           </div>
-          <button className="text-blue-600 hover:text-blue-700 text-sm font-medium cursor-pointer">
+          <Link
+            className="text-blue-600 hover:text-blue-700 text-sm font-medium cursor-pointer"
+            to="/e-commerce/products"
+          >
             View all
-          </button>
+          </Link>
         </div>
       </div>
       {/*Dynamic Data*/}
