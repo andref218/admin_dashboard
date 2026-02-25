@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 
 import { appRoutes } from "./constants/routes";
-import AppLayout from "./Layout/AppLayout";
+import AppLayout from "./layout/appLayout";
 
 function App() {
   const [sideBarCollapsed, setSideBarCollapsed] = useState(

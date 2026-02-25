@@ -316,7 +316,7 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
             <div className="flex-1 min-w-0">
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-slate-800 dark:text-white truncate">
-                  André Fonseca
+                  John Smith
                 </p>
                 <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
                   Administrator

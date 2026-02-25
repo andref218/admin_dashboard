@@ -15,7 +15,7 @@ export const pageTitles = {
 };
 
 export const pageSubtitles = {
-  "/dashboard": "Welcome back, André!",
+  "/dashboard": "Welcome back, John!",
   "/analytics": "Business performance overview",
   "/users": "Manage and monitor all users",
   "/e-commerce": "Monitor your store performance",

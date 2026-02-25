@@ -162,7 +162,7 @@ const Header = ({
             />
             <div className="hidden md:block">
               <p className="text-sm font-medium text-slate-800 dark:text-slate-200">
-                André
+                John
               </p>
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Administrator

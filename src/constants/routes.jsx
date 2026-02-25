@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import DashBoard from "../pages/Dashboard/DashBoard";
+import DashBoard from "../pages/Dashboard/Dashboard";
 import Users from "../pages/Users/Users";
 import Analytics from "../pages/Analytics/Analytics";
 import ProductsTable from "../pages/Ecommerce/Products/ProductsTable";
