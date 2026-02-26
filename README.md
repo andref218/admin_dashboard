@@ -6,19 +6,26 @@ It focuses on a clean UI, responsive layouts, and reusable components, simulatin
 > ⚠️ **Note:** This project is currently **frontend-only**.  
 > A backend (API, authentication, and real data persistence) is **planned for future implementation**.
 
----
+## 🌐 Live Demo
+
+Check out the live demo:  
+[![Visit Live App](https://img.shields.io/badge/Live%20App-Visit%20Now-brightgreen)](https://admin-dashboard-three-steel-20.vercel.app/dashboard)
 
 <p align="center">
-  <img src="./screenshots/adminDashboardPagePreviewDarkMode.png" />
+  <a href="https://admin-dashboard-three-steel-20.vercel.app/dashboard" target="_blank">
+    <img src="./screenshots/adminDashboardPagePreviewDarkMode.png" />
+  </a>
 </p>
 <p align="center">
   <img src="./screenshots/adminDashboardPageMobilePreviewDarkMode.png" width="250" />
   <img src="./screenshots/adminDashboardPageMobilePreviewLightMode.png" width="250" />
 </p>
 
+---
+
 ## 🎯 Project Goals
 
-The maing goals of this project are to:
+The main goals of this project are to:
 
 - Build a responsive admin dashboard using **React**, **Tailwind CSS**, and **Recharts**
 - Implement cards, interactive charts, interactive tables, and calendar management
