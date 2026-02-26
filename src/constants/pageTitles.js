@@ -15,19 +15,19 @@ export const pageTitles = {
 };
 
 export const pageSubtitles = {
-  "/dashboard": "Welcome back, John!",
-  "/analytics": "Business performance overview",
-  "/users": "Manage and monitor all users",
-  "/e-commerce": "Monitor your store performance",
-  "/e-commerce/products": "View and manage all products",
-  "/e-commerce/orders": "Track all orders",
-  "/e-commerce/customers": "Manage your customers",
-  "/inventory": "Track your products",
-  "/transactions": "Review all transactions",
-  "/messages": "See all messages",
-  "/calendar": "Your schedule and events",
-  "/reports": "Detailed reports and insights",
-  "/settings": "Manage application settings",
+  "/dashboard": "Welcome back, John!       ",
+  "/analytics": "Business overview         ",
+  "/users": "Manage all users          ",
+  "/e-commerce": "Store performance         ",
+  "/e-commerce/products": "Manage products           ",
+  "/e-commerce/orders": "Track all orders          ",
+  "/e-commerce/customers": "Manage customers          ",
+  "/inventory": "Track products            ",
+  "/transactions": "Review all transactions   ",
+  "/messages": "All messages              ",
+  "/calendar": "Your events               ",
+  "/reports": "Detailed reports          ",
+  "/settings": "App settings              ",
 };
 
 export const searchPlaceholders = {

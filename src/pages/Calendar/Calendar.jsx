@@ -295,7 +295,7 @@ const DashboardCalendar = () => {
             event.title.toLowerCase().includes(searchItem.trim().toLowerCase()),
         ).length === 0 && (
           <div className="absolute inset-0 flex items-center justify-center text-gray-400 dark:text-gray-500 text-lg pointer-events-none">
-            No events found
+            No events found.
           </div>
         )}
       </div>

@@ -425,7 +425,10 @@ const ProductsTable = () => {
                 ) : (
                   <tr>
                     <td colSpan={7}>
-                      <div className="w-full flex items-center justify-center py-10 text-slate-500 dark:text-slate-200">
+                      <div
+                        className="w-full flex items-center justify-center py-10 text-slate-500 dark:text-slate-400
+                      "
+                      >
                         No products found.
                       </div>
                     </td>

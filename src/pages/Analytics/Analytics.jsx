@@ -63,7 +63,7 @@ const Analytics = () => {
         className="flex items-center justify-center p-10 bg-white/80 dark:bg-slate-900/80
         rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-lg text-slate-500 dark:text-slate-400"
       >
-        No stats found
+        No stats found.
       </div>
     );
   }

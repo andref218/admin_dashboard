@@ -43,12 +43,14 @@ const Header = ({
             <p className="dark:text-white text-sm">{subTitle}</p>
           </div>
         </div>
-
         {/* Center Section */}
         {/* Mobile */}
         <div className="flex-1 mx-2 md:hidden">
           <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white text-slate-400" />
+            <Search
+              className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white 
+            text-slate-400"
+            />
             <input
               type="text"
               value={searchItem}
@@ -60,10 +62,12 @@ const Header = ({
             />
           </div>
         </div>
-
         {/* Tablet */}
         <div className="hidden md:flex lg:hidden flex-1 mx-2 relative">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white text-slate-400" />
+          <Search
+            className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white 
+          text-slate-400"
+          />
           <input
             type="text"
             value={searchItem}
@@ -74,17 +78,19 @@ const Header = ({
             onChange={(e) => setSearchItem(e.target.value.trimStart())}
           />
         </div>
-
         {/* Desktop */}
-        <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-full max-w-md px-6">
-          <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white text-slate-400" />
+        <div className="hidden lg:flex flex-1 justify-center px-6">
+          <div className="relative w-full max-w-100">
+            <Search
+              className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 dark:text-white 
+            text-slate-400"
+            />
             <input
               type="text"
               value={searchItem}
               placeholder={placeholderSearch}
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200
-            dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 
+              dark:border-slate-700 rounded-xl text-slate-800 dark:text-white placeholder-slate-500 
               focus:outline-none focus:ring-2 focus:ring-blue-500/80 focus:border-transparent transition-all"
               onChange={(e) => setSearchItem(e.target.value.trimStart())}
             />
@@ -98,7 +104,6 @@ const Header = ({
               <Filter />
             </button>
             */}
-
         {/* Right Section */}
         <div className="flex items-center space-x-2 md:space-x-3 ">
           {/*Quick action

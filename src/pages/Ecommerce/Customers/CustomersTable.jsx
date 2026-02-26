@@ -473,8 +473,8 @@ const CustomersTable = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={9}>
-                      <div className="w-full flex items-center justify-center py-10 text-slate-500 dark:text-slate-200">
+                    <td colSpan={10}>
+                      <div className="w-full flex items-center justify-center py-10 text-slate-500 dark:text-slate-400">
                         No customers found.
                       </div>
                     </td>
