@@ -94,7 +94,16 @@ const DashboardCalendar = () => {
   //Opens the custom context dropdown when the user right-clicks an event
   const handleEventRightClick = (event, jsEvent) => {
     jsEvent.preventDefault();
-    setSelectedEvent(event);
+    const currentEvent = events.find((e) => String(e.id) === String(event.id));
+    if (!currentEvent) return;
+    const normalizedEvent = {
+      id: event.id,
+      title: event.title,
+      start: event.start ? new Date(event.start) : new Date(),
+      end: event.end ? new Date(event.end) : new Date(event.start),
+      color: event.backgroundColor || event.color,
+    };
+    setSelectedEvent(normalizedEvent);
     setDropdownPosition({ top: jsEvent.clientY, left: jsEvent.clientX });
   };
 
@@ -111,7 +120,9 @@ const DashboardCalendar = () => {
   const handleEdit = () => {
     if (!selectedEvent) return;
 
-    const currentEvent = events.find((e) => e.id === selectedEvent.id);
+    const currentEvent = events.find(
+      (e) => String(e.id) === String(selectedEvent.id),
+    );
     if (!currentEvent) return;
 
     const startDate =
@@ -135,6 +146,7 @@ const DashboardCalendar = () => {
       _originalEnd: endDate,
     });
 
+    setSelectedEvent(currentEvent);
     setDropdownPosition(null);
   };
 
@@ -152,24 +164,44 @@ const DashboardCalendar = () => {
 
   // One normal click, see event details
   const handleEventClick = (info) => {
+    const currentEvent = events.find(
+      (e) => String(e.id) === String(info.event.id),
+    );
+    if (!currentEvent) return;
     const eventObj = {
       id: info.event.id,
       title: info.event.title,
-      start: info.event.start,
-      end: info.event.end,
+      start: info.event.start ? new Date(info.event.start) : new Date(),
+      end: info.event.end
+        ? new Date(info.event.end)
+        : new Date(info.event.start),
+      color: info.event.backgroundColor || info.event.color,
     };
+    setSelectedEvent(eventObj);
 
     setViewItem(eventObj);
   };
 
   // Normal day click, Opens the edit modal to create a new event on the selected day
   const handleDayClick = (info) => {
+    const clickedDate = info.date;
+    const isAllDay = info.allDay;
+
+    const startTime = isAllDay
+      ? "09:00"
+      : clickedDate.toTimeString().slice(0, 5);
+    const endTime = isAllDay
+      ? "10:00"
+      : new Date(clickedDate.getTime() + 60 * 60 * 1000) // +1h
+          .toTimeString()
+          .slice(0, 5);
+
     setEditItem({
       id: Math.random(),
       title: "",
-      date: info.dateStr,
-      start: "09:00",
-      end: "10:00",
+      date: clickedDate.toISOString().split("T")[0],
+      start: startTime,
+      end: endTime,
       isNew: true,
     });
   };
@@ -357,8 +389,12 @@ const DashboardCalendar = () => {
 
             baseDate = new Date(year, month - 1, day);
           } else {
-            // Existing event → keep the original dragged date
-            baseDate = new Date(updatedItem._originalStart);
+            const currentEvent = events.find(
+              (e) => String(e.id) === String(updatedItem.id),
+            );
+            if (!currentEvent) return;
+
+            baseDate = new Date(currentEvent.start);
           }
 
           const [startHour, startMin] = (updatedItem.start || "09:00")
@@ -403,7 +439,9 @@ const DashboardCalendar = () => {
         itemType="Event"
         onCancel={() => setDeleteItem(null)}
         onConfirm={() => {
-          setEvents((prev) => prev.filter((e) => e.id !== deleteItem.id));
+          setEvents((prev) =>
+            prev.filter((e) => String(e.id) !== String(deleteItem.id)),
+          );
           setDeleteItem(null);
         }}
       />
