@@ -41,6 +41,7 @@ The main goals of this project are to:
 - **React** – UI framework
 - **Vite** – Fast development and build tool
 - **Tailwind CSS** – Utility-first responsive styling
+- **React Router DOM** – Client-side routing and navigation
 - **Framer Motion** – Animations and transitions
 - **Lucide React** – SVG icon library
 - **FullCalendar** – Calendar management
