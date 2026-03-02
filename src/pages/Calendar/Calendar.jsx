@@ -110,7 +110,13 @@ const DashboardCalendar = () => {
   //Opens the view modal with the selected event details.
   const handleView = () => {
     if (!selectedEvent) return;
-    setViewItem(selectedEvent);
+
+    const currentEvent = events.find(
+      (e) => String(e.id) === String(selectedEvent.id),
+    );
+    if (!currentEvent) return;
+
+    setViewItem(currentEvent);
     setDropdownPosition(null);
   };
 
@@ -129,6 +135,7 @@ const DashboardCalendar = () => {
       currentEvent.start instanceof Date
         ? currentEvent.start
         : new Date(currentEvent.start);
+
     const endDate =
       currentEvent.end instanceof Date
         ? currentEvent.end
@@ -154,11 +161,12 @@ const DashboardCalendar = () => {
   const handleDelete = () => {
     if (!selectedEvent) return;
 
-    setDeleteItem({
-      id: selectedEvent.id,
-      title: selectedEvent.title,
-    });
+    const currentEvent = events.find(
+      (e) => String(e.id) === String(selectedEvent.id),
+    );
+    if (!currentEvent) return;
 
+    setDeleteItem(currentEvent);
     setDropdownPosition(null);
   };
 
@@ -184,26 +192,36 @@ const DashboardCalendar = () => {
 
   // Normal day click, Opens the edit modal to create a new event on the selected day
   const handleDayClick = (info) => {
-    const clickedDate = info.date;
-    const isAllDay = info.allDay;
+    const startDate = new Date(info.date);
+    const endDate = new Date(info.date);
+    if (info.allDay) {
+      startDate.setHours(9, 0, 0, 0);
+      endDate.setHours(10, 0, 0, 0);
+    } else {
+      const hour = startDate.getHours();
+      const minute = startDate.getMinutes();
+      startDate.setHours(hour, minute, 0, 0);
+      endDate.setHours(hour + 1, minute, 0, 0);
+    }
 
-    const startTime = isAllDay
-      ? "09:00"
-      : clickedDate.toTimeString().slice(0, 5);
-    const endTime = isAllDay
-      ? "10:00"
-      : new Date(clickedDate.getTime() + 60 * 60 * 1000) // +1h
-          .toTimeString()
-          .slice(0, 5);
+    const tempEvent = {
+      id: `${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      title: "New Event",
+      start: startDate,
+      end: endDate,
+      color: eventColors[Math.floor(Math.random() * eventColors.length)],
+      isNew: true,
+      _originalStart: startDate,
+      _originalEnd: endDate,
+    };
 
     setEditItem({
-      id: Math.random(),
-      title: "",
-      date: clickedDate.toISOString().split("T")[0],
-      start: startTime,
-      end: endTime,
-      isNew: true,
+      ...tempEvent,
+      start: startDate.toTimeString().slice(0, 5),
+      end: endDate.toTimeString().slice(0, 5),
+      date: startDate.toISOString().split("T")[0],
     });
+    setSelectedEvent(tempEvent);
   };
 
   return (
@@ -272,17 +290,23 @@ const DashboardCalendar = () => {
           //Keeps React state in sync when an event is dragged.
           //* Without this, changes would be lost when editing.
           eventDrop={(info) => {
+            const updatedEvent = {
+              id: info.event.id,
+              title: info.event.title,
+              start: info.event.start,
+              end: info.event.end,
+              color: info.event.backgroundColor || info.event.color,
+              extendedProps: {
+                ...info.event.extendedProps,
+                _originalStart: info.event.start,
+                _originalEnd: info.event.end,
+              },
+            };
+
             setEvents((prev) =>
-              prev.map((e) =>
-                e.id === info.event.id
-                  ? {
-                      ...e,
-                      start: info.event.start,
-                      end: info.event.end,
-                    }
-                  : e,
-              ),
+              prev.map((e) => (e.id === updatedEvent.id ? updatedEvent : e)),
             );
+            setSelectedEvent(updatedEvent);
           }}
           events={events.filter((event) =>
             event.title.toLowerCase().includes(searchItem.trim().toLowerCase()),
@@ -379,24 +403,13 @@ const DashboardCalendar = () => {
           { name: "start", label: "Start Time", type: "time" },
           { name: "end", label: "End Time", type: "time" },
         ]}
-        onCancel={() => setEditItem(null)}
-        onSave={(updatedItem) => {
-          let baseDate;
-
-          if (updatedItem.isNew) {
-            // New event → use the selected day from the calendar
-            const [year, month, day] = updatedItem.date.split("-").map(Number);
-
-            baseDate = new Date(year, month - 1, day);
-          } else {
-            const currentEvent = events.find(
-              (e) => String(e.id) === String(updatedItem.id),
-            );
-            if (!currentEvent) return;
-
-            baseDate = new Date(currentEvent.start);
+        onCancel={() => {
+          if (editItem?.isTemp) {
+            setEvents((prev) => prev.filter((e) => e.id !== editItem.id));
           }
-
+          setEditItem(null);
+        }}
+        onSave={(updatedItem) => {
           const [startHour, startMin] = (updatedItem.start || "09:00")
             .split(":")
             .map(Number);
@@ -404,10 +417,10 @@ const DashboardCalendar = () => {
             .split(":")
             .map(Number);
 
-          const newStart = new Date(baseDate);
+          const newStart = new Date(updatedItem._originalStart);
           newStart.setHours(startHour, startMin);
 
-          const newEnd = new Date(baseDate);
+          const newEnd = new Date(updatedItem._originalStart);
           newEnd.setHours(endHour, endMin);
 
           const finalEvent = {
@@ -415,17 +428,19 @@ const DashboardCalendar = () => {
             title: updatedItem.title || "Untitled",
             start: newStart,
             end: newEnd,
-            color: updatedItem.isNew
-              ? eventColors[Math.floor(Math.random() * eventColors.length)] // random existing color
-              : updatedItem.color || "#22c55e",
+            color: updatedItem.color || "#22c55e",
+            extendedProps: {
+              _originalStart: newStart,
+              _originalEnd: newEnd,
+            },
           };
 
           setEvents((prev) => {
             if (updatedItem.isNew) {
               return [...prev, finalEvent];
+            } else {
+              return prev.map((e) => (e.id === finalEvent.id ? finalEvent : e));
             }
-
-            return prev.map((e) => (e.id === finalEvent.id ? finalEvent : e));
           });
 
           setSelectedEvent(finalEvent);

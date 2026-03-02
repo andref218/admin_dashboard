@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
  * - onCancel: function()
  */
 const EditItemModal = ({ item, fields = [], onSave, onCancel }) => {
-  const [formData, setFormData] = useState({});
+  if (!item) return null;
 
   useEffect(() => {
     if (item) {
@@ -24,7 +24,7 @@ const EditItemModal = ({ item, fields = [], onSave, onCancel }) => {
     }
   }, [item, fields]);
 
-  if (!item) return null;
+  const [formData, setFormData] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
